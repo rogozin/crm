@@ -1,0 +1,32 @@
+<h1>firms</h1>
+
+<div class="grid_12">
+
+<%= link_to 'Новый Firm', new_firm_path %>
+
+<table>
+  <tr>
+    <th></th>
+    <th>Name</th>
+    <th></th>
+    <th>Short name</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @firms.each do |firm| %>
+  <tr>
+    <td><%= link_to image_tag('edit.png'), edit_firm_path(firm) %></td>
+    <td><%= firm.name %></td>
+    <td><%= link_to image_tag('edit.png'), edit_firm_path(firm) %></td>
+    <td><%= firm.short_name %></td>
+    <td><%= link_to 'Show', firm %></td>
+    <td><%= link_to image_tag('bin.png'), firm, confirm: 'Удалить, вы уверены?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+
+</div>

@@ -1,0 +1,32 @@
+<h1><%= plural_table_name %></h1>
+
+<div class="grid_12">
+
+<%%= link_to 'Новый <%= human_name %>', new_<%= singular_table_name %>_path %>
+
+<table>
+  <tr>
+<% attributes.each do |attribute| -%>
+    <th></th>
+    <th><%= attribute.human_name %></th>
+<% end -%>
+    <th></th>
+    <th></th>
+  </tr>
+
+<%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+  <tr>
+<% attributes.each do |attribute| -%>
+    <td><%%= link_to image_tag('edit.png'), edit_<%= singular_table_name %>_path(<%= singular_table_name %>) %></td>
+    <td><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
+<% end -%>
+    <td><%%= link_to 'Show', <%= singular_table_name %> %></td>
+    <td><%%= link_to image_tag('bin.png'), <%= singular_table_name %>, <%= key_value :confirm, "'Удалить, вы уверены?'" %>, <%= key_value :method, ":delete" %> %></td>
+  </tr>
+<%% end %>
+</table>
+
+<br />
+
+
+</div>

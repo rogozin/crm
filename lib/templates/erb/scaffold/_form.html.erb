@@ -1,0 +1,14 @@
+<%%= form_for(@<%= singular_table_name %>) do |f| %>
+ 
+  <%%= render :partial => "shared/error_messages", :locals => {:target => @<%= singular_table_name %> if @<%= singular_table_name %>.errors.any? %>
+
+<% attributes.each do |attribute| -%>
+  <div class="field">
+    <%%= f.label :<%= attribute.name %> %><br />
+    <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>
+  </div>
+<% end -%>
+  <div class="actions">
+    <%%= f.submit %>
+  </div>
+<%% end %>

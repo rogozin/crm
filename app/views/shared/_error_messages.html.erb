@@ -1,0 +1,10 @@
+<% if target.errors.any? %>  
+<div class="errorExplanation">  
+  <h2><%= I18n.t :errors_cnt, :count => target.errors.count %></h2>  
+  <ul>  
+  <% target.errors.full_messages.each do |msg| %>  
+    <li><%= msg %></li>  
+  <% end %>  
+  </ul>  
+</div>  
+<% end %>  
