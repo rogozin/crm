@@ -1,6 +1,5 @@
-<h1><%= plural_table_name %></h1>
+<%% page_title("<%= plural_table_name %>") -%>
 
-<div class="grid_12">
 
 <%%= link_to 'Новый <%= human_name %>', new_<%= singular_table_name %>_path %>
 
@@ -16,8 +15,8 @@
 
 <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
   <tr>
-<% attributes.each do |attribute| -%>
     <td><%%= link_to image_tag('edit.png'), edit_<%= singular_table_name %>_path(<%= singular_table_name %>) %></td>
+<% attributes.each do |attribute| -%>
     <td><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
 <% end -%>
     <td><%%= link_to 'Show', <%= singular_table_name %> %></td>
@@ -29,4 +28,3 @@
 <br />
 
 
-</div>

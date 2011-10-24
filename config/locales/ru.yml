@@ -1,0 +1,6 @@
+ru:
+  helpers:
+   submit:
+     create: 'Создать новую запись'
+     update: 'Сохранить изменения'
+     submit: 'Сохранить'

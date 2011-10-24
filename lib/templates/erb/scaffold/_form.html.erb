@@ -1,10 +1,10 @@
-<%%= form_for(@<%= singular_table_name %>) do |f| %>
+<%%= form_for(@<%= singular_table_name %>, :class => "one_line_form") do |f| %>
  
-  <%%= render :partial => "shared/error_messages", :locals => {:target => @<%= singular_table_name %> if @<%= singular_table_name %>.errors.any? %>
+  <%%= render :partial => "shared/error_messages", :locals => {:target => @<%= singular_table_name %> } if @<%= singular_table_name %>.errors.any? %>
 
 <% attributes.each do |attribute| -%>
   <div class="field">
-    <%%= f.label :<%= attribute.name %> %><br />
+    <%%= f.label :<%= attribute.name %> %>
     <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>
   </div>
 <% end -%>

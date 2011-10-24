@@ -1,13 +1,13 @@
-<%= form_for(@firm) do |f| %>
+<%= form_for(@firm, :class => "one_line_form") do |f| %>
  
-  <%= render :partial => "shared/error_messages", :locals => {:target => @firm if @firm.errors.any? %>
+  <%= render :partial => "shared/error_messages", :locals => {:target => @firm } if @firm.errors.any? %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= label :firm,  :name %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :short_name %><br />
+    <%= f.label :short_name %>
     <%= f.text_field :short_name %>
   </div>
   <div class="actions">

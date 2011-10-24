@@ -1,6 +1,5 @@
-<h1>firms</h1>
+<% page_title("firms") -%>
 
-<div class="grid_12">
 
 <%= link_to 'Новый Firm', new_firm_path %>
 
@@ -18,7 +17,6 @@
   <tr>
     <td><%= link_to image_tag('edit.png'), edit_firm_path(firm) %></td>
     <td><%= firm.name %></td>
-    <td><%= link_to image_tag('edit.png'), edit_firm_path(firm) %></td>
     <td><%= firm.short_name %></td>
     <td><%= link_to 'Show', firm %></td>
     <td><%= link_to image_tag('bin.png'), firm, confirm: 'Удалить, вы уверены?', method: :delete %></td>
@@ -29,4 +27,3 @@
 <br />
 
 
-</div>
