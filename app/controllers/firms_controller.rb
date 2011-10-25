@@ -1,24 +1,16 @@
+#encoding: utf-8;
 class FirmsController < ApplicationController
   before_filter :require_user
   # GET /firms
   # GET /firms.json
   def index
-    @firms = Firm.all
+    params[:page] ||=1
+    params[:per_page] ||=30
+    @firms = Firm.order("short_name").paginate(:page => params[:page], :per_page => params[:per_page])
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @firms }
-    end
-  end
-
-  # GET /firms/1
-  # GET /firms/1.json
-  def show
-    @firm = Firm.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @firm }
     end
   end
 
@@ -45,7 +37,7 @@ class FirmsController < ApplicationController
 
     respond_to do |format|
       if @firm.save
-        format.html { redirect_to @firm, notice: 'Firm was successfully created.' }
+        format.html { redirect_to edit_firm_path(@firm), :notice =>  "Новый #{ Firm.model_name.human } успешно создан." }
         format.json { render json: @firm, status: :created, location: @firm }
       else
         format.html { render action: "new" }
@@ -61,7 +53,7 @@ class FirmsController < ApplicationController
 
     respond_to do |format|
       if @firm.update_attributes(params[:firm])
-        format.html { redirect_to @firm, notice: 'Firm was successfully updated.' }
+        format.html { redirect_to edit_firm_path(@firm), :notice =>  "#{ Firm.model_name.human } успешно изменен."}
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -77,7 +69,7 @@ class FirmsController < ApplicationController
     @firm.destroy
 
     respond_to do |format|
-      format.html { redirect_to firms_url }
+      format.html { redirect_to firms_url, :notice =>  "#{ Firm.model_name.human } удален." }
       format.json { head :ok }
     end
   end

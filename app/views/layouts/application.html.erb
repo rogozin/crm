@@ -25,6 +25,9 @@
 </header>
 <div id="container" class="container_12">
   <div class="grid_12">
+     <%- flash.each do |name, msg| -%>
+    <%= content_tag :div, raw(msg), :id => name  if name.to_s.index("notice") or name.to_s.index("alert") %>
+  <%- end -%>
     <%= content_tag(:h1, yield(:page_title)) if content_for?(:page_title) %>
     <%= yield %>
   </div>

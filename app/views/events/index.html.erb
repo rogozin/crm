@@ -1,0 +1,30 @@
+<% page_title("События") -%>
+
+
+<div class="b-command-menu">
+  <%= link_to 'Новое событие', new_event_path %>
+</div>
+
+<div id="events" class="table_data">
+
+<table>
+  <tr>
+    <th></th>
+    <th>Имя события </th>
+    <th>Статус</th>
+    <th></th>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr>
+    <td><%= link_to image_tag('edit.png'), edit_event_path(event) %></td>
+    <td><%= event.name %></td>
+    <td><%= event.status %></td>
+    <td><%= link_to image_tag('bin.png'), event, confirm: 'Удалить, вы уверены?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+</div>
+
+<%= will_paginate @events %>

@@ -1,16 +1,45 @@
-<%= form_for(@firm, :class => "one_line_form") do |f| %>
+<%= form_for(@firm, :html => {:class => "one_line_form"} ) do |f| %>
  
   <%= render :partial => "shared/error_messages", :locals => {:target => @firm } if @firm.errors.any? %>
 
   <div class="field">
-    <%= label :firm,  :name %>
+    <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
     <%= f.label :short_name %>
     <%= f.text_field :short_name %>
   </div>
+  <div class="field">
+    <%= f.label :city %>
+    <%= f.text_field :city %>
+  </div>    
+  <div class="field">
+    <%= f.label :addr_u %>
+    <%= f.text_area :addr_u %>
+  </div>      
+  <div class="field">
+    <%= f.label :addr_f %>
+    <%= f.text_area :addr_f %>
+  </div>        
+  <div class="field">
+    <%= f.label :subway %>
+    <%= f.text_field :subway %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %>
+    <%= f.text_field :phone %>
+  </div> 
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>            
+  <div class="field">
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+  </div>   
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+<div class="clear"></div>

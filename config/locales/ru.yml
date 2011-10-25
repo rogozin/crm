@@ -1,6 +1,17 @@
 ru:
+  activerecord:
+    models: 
+      contact: "Контакт"
+      event: "Событие"
+      contact_type: "Тип контакта"
+    attributes:
+      event:
+        name: "Название события"
+        status: "Статус"
+      contact_type:
+        name: "Наименование"  
   helpers:
    submit:
-     create: 'Создать новую запись'
+     create: 'Создать запись'
      update: 'Сохранить изменения'
      submit: 'Сохранить'

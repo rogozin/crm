@@ -7,6 +7,7 @@ gem 'rails', '3.1.1'
 
 gem 'mysql2'
 gem 'russian'
+gem 'will_paginate'
 
 
 # Gems used only for assets and not required
@@ -28,6 +29,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'factory_girl'
+  gem 'paperclip'
+  gem 'database_cleaner'
 end
 
 # Use unicorn as the web server

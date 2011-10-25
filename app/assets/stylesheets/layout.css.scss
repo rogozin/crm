@@ -1,5 +1,5 @@
 
-$content_color:#1B2B32;
+$content_color:#333;
 $body_color:#E1E7E8;
 $alert_color:#B22E2F;
 $base_color:#A3ABAF;
@@ -9,6 +9,9 @@ html { height:100%}
 body {
   height:100%;
   color:$content_color;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
   background-color:$menu_color;
   background-image: linear-gradient(bottom, #2A5B66 61%, #389494 22%);
   background-image: -o-linear-gradient(bottom, #2A5B66 61%, #389494 22%);
@@ -25,6 +28,45 @@ body {
   -pie-background: linear-gradient(#2A5B66, #389494);
   behavior: url(javascripts/PIE.htc);
  }
+
+h1 {font-size:20px; padding:5px 0;}
+
+div, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px; }
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px; }
+
+a {
+  color: #000;
+  &:visited {
+    color: #666; }
+  &:hover {
+    color: $alert_color; } }
+
+
+.corner-all {
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	behavior: url(/javascripts/PIE.htc);
+}
+
+#notice {
+  margin: 5px 0;
+  padding: 5px;
+//  background-color: lighten($menu_color, 10%); 
+  background-color: #90EE90; 
+  color:$menu_color; 
+  @extend .corner-all;
+  }
+
+
 
 #logo h1  {
    font-size:2.5em;
@@ -47,6 +89,18 @@ footer {
  color: $body_color;
  }
  
+table
+  th, td { 
+    padding:5px;
+    border: 1px solid $menu-color;
+  }
+  th {
+      background-color:$base-color;
+      color:$body-color;
+      font-weight:bold;
+  }
+  td { font-size:0.9em; }
+ 
  
 #main_menu {
 clear:both;
@@ -55,7 +109,6 @@ background-image: -o-linear-gradient(bottom, $body_color 0%, $base_color 24%);
 background-image: -moz-linear-gradient(bottom, $body_color 0%, $base_color 24%);
 background-image: -webkit-linear-gradient(bottom, $body_color 0%, $base_color 24%);
 background-image: -ms-linear-gradient(bottom, $body_color 0%, $base_color 24%);
-
 background-image: -webkit-gradient(
 	linear,
 	left bottom,
@@ -84,6 +137,7 @@ height:39px;
           text-decoration:none;
           outline:none;
           padding:10px 20px;
+          &:hover {color:$alert_color;}
         }
     }
     li.selected a { color:#376691; }
@@ -165,6 +219,7 @@ select {background-color: white;}
 
 .b-want-to-register { @extend .g-hidden; }
 
+
 .one_line_form {
   float: left;
   label {	
@@ -179,22 +234,33 @@ select {background-color: white;}
 .g-hidden {display:none;}
 
 
-
-.b-formfield-div
-{
-    clear:both;
-    text-align:right;
-    line-height: 25px;
-    margin-bottom: 10px;
-    span {
-      float: left;
-      padding-right: 10px;    
-      margin-left: -8px;
-      color: #c36;
-      font-size:8pt;
-      vertical-align:super;
-    }
-}
+div {
+  &.field {
+      margin-bottom: 10px; 
+      clear:both;
+      text-align:right;
+      line-height: 25px;
+      margin-bottom: 10px;
+      span {
+        float: left;
+        padding-right: 10px;    
+        margin-left: -8px;
+        color: #c36;
+        font-size:8pt;
+        vertical-align:super;
+      }
+     input[type="text"], textarea {
+        width:220px;
+        border: 1px solid $base_color;
+     } 
+     textarea {height:40px;}
+    } 
+  &.b-command-menu {
+      font-size:1.1em;
+      padding:5px 0;
+    }  
+  }
+    
 
 #user_menu {
   text-align:right;
@@ -202,3 +268,35 @@ select {background-color: white;}
   a {color: $body-color;}
 }
 
+
+.field_with_errors {
+  padding: 2px;
+  background-color: $alert_color;
+  label {color:#fff}
+}
+
+.errorExplanation {
+  width: 450px;
+  border: 2px solid darken($alert_color,10%);
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: $alert_color;
+    color: #fff; }
+  ul {  
+    padding-left:10px;
+    li {    
+      font-size: 12px;
+      list-style: square; }
+     } 
+    }
+
+.spacer {height:10px;}

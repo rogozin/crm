@@ -1,0 +1,28 @@
+<% page_title("Типы контактов") -%>
+
+
+<div class="b-command-menu">
+  <%= link_to 'Новый тип', new_contact_type_path %>
+</div>
+
+<div id="contact_types" class="table_data">
+
+<table>
+  <tr>
+    <th></th>
+    <th>Наименование</th>
+    <th></th>
+  </tr>
+
+<% @contact_types.each do |contact_type| %>
+  <tr>
+    <td><%= link_to image_tag('edit.png'), edit_contact_type_path(contact_type) %></td>
+    <td><%= contact_type.name %></td>
+    <td><%= link_to image_tag('bin.png'), contact_type, confirm: 'Удалить, вы уверены?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+</div>
+
+<%= will_paginate @contact_types %>

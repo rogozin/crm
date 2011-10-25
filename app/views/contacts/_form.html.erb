@@ -1,0 +1,13 @@
+<%= form_for(@contact, :html => {:class => "one_line_form"} ) do |f| %>
+ 
+  <%= render :partial => "shared/error_messages", :locals => {:target => @contact } if @contact.errors.any? %>
+
+  <div class="field">
+    <%= f.label :firm_id %>
+    <%= f.number_field :firm_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<div class="clear"></div>

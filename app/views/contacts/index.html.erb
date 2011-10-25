@@ -1,0 +1,29 @@
+<% page_title("contacts") -%>
+
+
+<div class="b-command-menu">
+  <%= link_to 'Новый Contact', new_contact_path %>
+</div>
+
+<div id="contacts" class="table_data">
+
+<table>
+  <tr>
+    <th></th>
+    <th>Firm</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @contacts.each do |contact| %>
+  <tr>
+    <td><%= link_to image_tag('edit.png'), edit_contact_path(contact) %></td>
+    <td><%= contact.firm_id %></td>
+    <td><%= link_to image_tag('bin.png'), contact, confirm: 'Удалить, вы уверены?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+</div>
+
+<%= will_paginate @contacts %>

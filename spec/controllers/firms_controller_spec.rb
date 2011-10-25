@@ -38,7 +38,7 @@ describe FirmsController do
   describe "GET show" do
     it "assigns the requested firm as @firm" do
       firm = Firm.create! valid_attributes
-      get :show, :id => firm.id
+      get :show, :id => firm.id.to_s
       assigns(:firm).should eq(firm)
     end
   end
@@ -53,7 +53,7 @@ describe FirmsController do
   describe "GET edit" do
     it "assigns the requested firm as @firm" do
       firm = Firm.create! valid_attributes
-      get :edit, :id => firm.id
+      get :edit, :id => firm.id.to_s
       assigns(:firm).should eq(firm)
     end
   end
@@ -125,7 +125,7 @@ describe FirmsController do
         firm = Firm.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Firm.any_instance.stub(:save).and_return(false)
-        put :update, :id => firm.id, :firm => {}
+        put :update, :id => firm.id.to_s, :firm => {}
         assigns(:firm).should eq(firm)
       end
 
@@ -133,7 +133,7 @@ describe FirmsController do
         firm = Firm.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Firm.any_instance.stub(:save).and_return(false)
-        put :update, :id => firm.id, :firm => {}
+        put :update, :id => firm.id.to_s, :firm => {}
         response.should render_template("edit")
       end
     end
@@ -143,13 +143,13 @@ describe FirmsController do
     it "destroys the requested firm" do
       firm = Firm.create! valid_attributes
       expect {
-        delete :destroy, :id => firm.id
+        delete :destroy, :id => firm.id.to_s
       }.to change(Firm, :count).by(-1)
     end
 
     it "redirects to the firms list" do
       firm = Firm.create! valid_attributes
-      delete :destroy, :id => firm.id
+      delete :destroy, :id => firm.id.to_s
       response.should redirect_to(firms_url)
     end
   end

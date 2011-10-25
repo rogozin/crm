@@ -1,25 +1,17 @@
+#encoding: utf-8;
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
   before_filter :require_user
   # GET <%= route_url %>
   # GET <%= route_url %>.json
   def index
-    @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
+    params[:page] ||=1
+    params[:per_page] ||=30
+    @<%= plural_table_name %> = <%= class_name %>.paginate(:page => params[:page], :per_page => params[:per_page])
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render <%= key_value :json, "@#{plural_table_name}" %> }
-    end
-  end
-
-  # GET <%= route_url %>/1
-  # GET <%= route_url %>/1.json
-  def show
-    @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render <%= key_value :json, "@#{singular_table_name}" %> }
     end
   end
 
@@ -46,7 +38,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
     respond_to do |format|
       if @<%= orm_instance.save %>
-        format.html { redirect_to @<%= singular_table_name %>, <%= key_value :notice, "'#{human_name} was successfully created.'" %> }
+        format.html { redirect_to @<%= singular_table_name %>, :notice =>  "Новый #{ <%= class_name %>.model_name.human } успешно создан." }
         format.json { render <%= key_value :json, "@#{singular_table_name}" %>, <%= key_value :status, ':created' %>, <%= key_value :location, "@#{singular_table_name}" %> }
       else
         format.html { render <%= key_value :action, '"new"' %> }
@@ -62,7 +54,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
     respond_to do |format|
       if @<%= orm_instance.update_attributes("params[:#{singular_table_name}]") %>
-        format.html { redirect_to @<%= singular_table_name %>, <%= key_value :notice, "'#{human_name} was successfully updated.'" %> }
+        format.html { redirect_to @<%= singular_table_name %>, :notice =>  "#{ <%= class_name %>.model_name.human } успешно изменен."}
         format.json { head :ok }
       else
         format.html { render <%= key_value :action, '"edit"' %> }
@@ -78,7 +70,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= orm_instance.destroy %>
 
     respond_to do |format|
-      format.html { redirect_to <%= index_helper %>_url }
+      format.html { redirect_to <%= index_helper %>_url, :notice =>  "#{ <%= class_name %>.model_name.human } удален." }
       format.json { head :ok }
     end
   end
