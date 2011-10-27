@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Crm</title>
+  <title><%= @page_title %></title>
   <%= stylesheet_link_tag    "application" %>
   <script> 
 
@@ -28,7 +28,8 @@
      <%- flash.each do |name, msg| -%>
     <%= content_tag :div, raw(msg), :id => name  if name.to_s.index("notice") or name.to_s.index("alert") %>
   <%- end -%>
-    <%= content_tag(:h1, yield(:page_title)) if content_for?(:page_title) %>
+    <%= content_tag(:h1, yield(:page_title), :class => content_for?(:page_subtitle) ? "with-subtitle" : nil ) if content_for?(:page_title) %>
+    <%= content_tag(:h2, yield(:page_subtitle)) if content_for?(:page_subtitle) if  content_for?(:page_subtitle) %> 
     <%= yield %>
   </div>
 </div>

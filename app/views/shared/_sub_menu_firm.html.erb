@@ -1,0 +1,12 @@
+<%= content_for :sub_menu do %>
+    <div id="sub_menu">
+       <ul>
+        <%= tab :clients, :url => edit_firm_path(@firm),  :label=>'Информация' %>
+        <%= tab :contacts, :url => firm_contacts_path(@firm), :label=>'Контакты' %>
+        <%= tab :persons, :url => firm_persons_path(@firm),  :label=>'Пользователи' %>
+        <%#= tab :categories, :url => "/clients", :label=>'Подменю-3' %>        
+      </ul>
+    </div>
+    <div class="clear"></div>
+
+<% end -%>

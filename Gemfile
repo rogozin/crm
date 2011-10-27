@@ -8,6 +8,7 @@ gem 'rails', '3.1.1'
 gem 'mysql2'
 gem 'russian'
 gem 'will_paginate'
+gem 'tinymce-rails'
 
 
 # Gems used only for assets and not required

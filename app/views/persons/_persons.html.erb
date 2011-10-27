@@ -1,0 +1,32 @@
+<table>
+  <th></th>
+  <th>Логин</th>
+  <% unless @firm -%>    
+  <th>Фирма</th> 
+  <% end -%>
+  <th>ФИО</th>
+  <th>Создан</th>
+  <th>Кол-во входов</th>
+  <th>Пред IP</th>
+  <th>Пред. вход</th>
+  <th>Текущ. IP</th>
+  <th>Текущ. вход</th>
+  <% @persons.each do |person| -%>
+    <tr>
+      <td><%= checked_box_image(person.active?) %></td>
+      <td><%= person.username %></td>
+      <% unless @firm -%>
+        <td class="no-wrap"><%= link_to firm_name(person.firm), edit_firm_path(person.firm) if person.firm %></td>        
+      <% end -%>
+      <td><%= person.fio %>
+      <p class="smalltext"><%= person.appoint %></p>
+      </td>
+      <td class="no-wrap"><%= I18n.l(person.created_at, :format => :short) if person.created_at %></td>      
+      <td><%= person.login_count %></td>
+      <td><%= person.last_login_ip %></td>
+      <td class="no-wrap"><%= I18n.l(person.last_login_at, :format => :short) if person.last_login_at %></td>
+      <td><%= person.current_login_ip %></td>
+      <td class="no-wrap"><%= I18n.l(person.last_request_at, :format => :short) if person.last_request_at %></td>
+    </tr>
+  <% end -%>
+</table>

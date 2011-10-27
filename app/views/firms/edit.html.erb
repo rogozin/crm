@@ -1,5 +1,7 @@
-<h1>Редактирование клиента</h1>
+<%= render :partial => 'shared/sub_menu_firm' %>
+<% page_title(@firm.short_name, true, "Просмотр информации") -%>
 
 <%= render 'form' %>
+
 
 <%= link_to 'Назад', firms_path %>

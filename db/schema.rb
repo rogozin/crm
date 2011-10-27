@@ -465,7 +465,6 @@ ActiveRecord::Schema.define(:version => 20111025091530) do
     t.date     "birth_date"
     t.string   "company_name"
     t.string   "city"
-    t.string   "url"
   end
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"

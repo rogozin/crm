@@ -1,0 +1,8 @@
+<% page_title("Список контактов", true ) -%>
+
+<div id="contacts" class="table_data">
+
+<%= render :partial => "contacts" %>
+</div>
+
+<%= will_paginate @contacts %>

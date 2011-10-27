@@ -10,6 +10,13 @@ ru:
         status: "Статус"
       contact_type:
         name: "Наименование"  
+      contact:
+        current_date: "Дата контакта"
+        next_date: "Дата следующего контакта"
+        contact_type_id: "Тип контакта"
+        event_id: "Результат"
+        comment: "Содержание разговора"
+          
   helpers:
    submit:
      create: 'Создать запись'

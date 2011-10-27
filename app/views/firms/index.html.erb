@@ -13,6 +13,7 @@
     <th>Название</th>
     <th>Город</th>
     <th>Телефон</th>
+    <th>Создан</th>
     <th></th>
   </tr>
 
@@ -22,6 +23,7 @@
     <td><%= firm.short_name %></td>
     <td><%= firm.city %></td>
     <td><%= firm.phone %></td>
+    <td><%= I18n.l(firm.created_at, :format => :long) %></td>
     <td><%= link_to image_tag('bin.png'), firm, confirm: 'Удалить, вы уверены?', method: :delete %></td>
   </tr>
 <% end %>

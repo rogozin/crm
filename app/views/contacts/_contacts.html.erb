@@ -1,0 +1,30 @@
+<table>
+  <tr>
+    <th></th>
+    <th>Дата</th>
+    <% unless @firm -%>
+    <th>Клиент</th>
+    <th>Город</th>
+    <% end -%>
+    <th>Тип</th>      
+    <th>Событие</th>
+    <th>Следующий контакт</th>
+    <th></th>
+  </tr>
+
+<% @contacts.each do |contact| %>
+  <tr>
+    <td><%= link_to image_tag('edit.png'), edit_firm_contact_path(contact.firm, contact) %></td>
+    <td><%= I18n.l(contact.current_date, :format => :long) %></td>
+    <% unless @firm -%>
+    <td><%= firm_name(contact.firm) %></td>
+    <td><%= contact.firm.city %></td>       
+    <% end -%>
+    <td><%= contact.contact_type.name %></td>
+    <%=  content_tag :td, contact.event.name, :class => event_status_class_name(contact.event.status) %>
+    <td><%= I18n.l(contact.next_date, :format => :long) %></td>    
+    <td><%= link_to image_tag('bin.png'), firm_contact_path(contact.firm, contact), confirm: 'Удалить, вы уверены?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+

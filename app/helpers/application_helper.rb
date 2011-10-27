@@ -1,5 +1,9 @@
 #encoding:utf-8;
 module ApplicationHelper
+  def  checked_box_image(checked=false,id=nil)
+      image_tag(checked ? 'checked.gif' : 'unchecked.gif', :id=>id) 
+  end
+
     def tab(*args)
     options = {:label => args.first.to_s}
     if args.last.is_a?(Hash)
@@ -18,6 +22,8 @@ module ApplicationHelper
 
     selected = if options[:match_path]
       request.fullpath.starts_with?(options[:match_path])
+    elsif options[:url]
+      request.fullpath.starts_with?(options[:url])
     else
       args.include?(controller.controller_name.to_sym)
     end

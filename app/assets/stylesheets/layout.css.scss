@@ -29,7 +29,16 @@ body {
   behavior: url(javascripts/PIE.htc);
  }
 
-h1 {font-size:20px; padding:5px 0;}
+h1 {
+    font-size:20px; padding:5px 0;
+    &.with-subtitle {color:$menu-color; border-bottom:1px solid $menu-color;margin-bottom:5px;}    
+}
+
+h2 { 
+    font-size:16px; padding:5px 0;            
+}
+
+
 
 div, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
@@ -40,6 +49,8 @@ pre {
   background-color: #eee;
   padding: 10px;
   font-size: 11px; }
+
+
 
 a {
   color: #000;
@@ -249,9 +260,9 @@ div {
         font-size:8pt;
         vertical-align:super;
       }
-     input[type="text"], textarea {
+     input, textarea, select { border: 1px solid $base_color; } 
+     input[type="text"], textarea, &.default-select select {
         width:220px;
-        border: 1px solid $base_color;
      } 
      textarea {height:40px;}
     } 
@@ -300,3 +311,23 @@ div {
     }
 
 .spacer {height:10px;}
+
+.smalltext {font-size:0.8em; color: lighten($content-color, 20%) }
+
+p  {
+ &.label {
+    color:$menu-color;
+     font-weight:bold;
+    }
+}
+.tinymce {
+   text-align:left;
+   width:100%;
+   clear:both;
+   textarea {width:600px; height:200px;}
+ } 
+ 
+ .event_poor { background-color:#FFC0CB} 
+ .event_good { background-color:#90EE90}
+ .table_data { margin-bottom:10px;}
+ .no-wrap {white-space: nowrap;}
