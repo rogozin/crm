@@ -1,6 +1,5 @@
 #encoding: utf-8;
-class FirmsController < ApplicationController
-  before_filter :require_user
+class FirmsController < BaseController
   before_filter :find_firm 
   # GET /firms
   # GET /firms.json

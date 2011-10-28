@@ -1,4 +1,4 @@
-class DirectoriesController < ApplicationController
+class DirectoriesController < BaseController
   def index
   end
 

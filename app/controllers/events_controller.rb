@@ -1,6 +1,5 @@
 #encoding: utf-8;
-class EventsController < ApplicationController
-  before_filter :require_user
+class EventsController < BaseController
   # GET /events
   # GET /events.json
   def index

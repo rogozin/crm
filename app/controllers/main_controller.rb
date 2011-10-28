@@ -1,5 +1,4 @@
-class MainController < ApplicationController
-  before_filter :require_user
+class MainController < BaseController
   
   def index
   end

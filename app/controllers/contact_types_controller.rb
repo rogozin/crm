@@ -1,6 +1,6 @@
 #encoding: utf-8;
-class ContactTypesController < ApplicationController
-  before_filter :require_user
+class ContactTypesController < BaseController
+
   # GET /contact_types
   # GET /contact_types.json
   def index
