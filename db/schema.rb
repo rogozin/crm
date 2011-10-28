@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111028040841) do
+ActiveRecord::Schema.define(:version => 20111028043912) do
 
   create_table "attach_images", :id => false, :force => true do |t|
     t.integer "attachable_id"
@@ -185,6 +185,10 @@ ActiveRecord::Schema.define(:version => 20111028040841) do
     t.float    "long"
     t.string   "permalink"
     t.boolean  "show_on_site",                :default => false
+    t.text     "comment"
+    t.string   "phone2"
+    t.string   "phone3"
+    t.string   "email2"
   end
 
   add_index "firms", ["city"], :name => "index_firms_on_city"
@@ -292,7 +296,7 @@ ActiveRecord::Schema.define(:version => 20111028040841) do
     t.datetime "updated_at"
   end
 
-  create_table "people", :force => true do |t|
+  create_table "persons", :force => true do |t|
     t.integer  "firm_id",    :null => false
     t.integer  "user_id"
     t.string   "fio"
@@ -483,6 +487,7 @@ ActiveRecord::Schema.define(:version => 20111028040841) do
     t.string   "company_name"
     t.string   "city"
     t.string   "url"
+    t.datetime "last_request_at"
   end
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"

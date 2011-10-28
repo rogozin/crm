@@ -11,7 +11,7 @@ gem 'will_paginate'
 gem 'tinymce-rails'
 gem 'dalli'
 gem 'unicorn'
-
+gem 'paperclip'
 
 # Gems used only for assets and not required
 # in production environments by default.
