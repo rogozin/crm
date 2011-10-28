@@ -1,6 +1,6 @@
 class CreatePersons < ActiveRecord::Migration
   def change
-    create_table :people do |t|
+    create_table :persons do |t|
       t.integer :firm_id, :null => false
       t.integer :user_id
       t.string :fio
