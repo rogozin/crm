@@ -4,6 +4,7 @@ ru:
       contact: "Контакт"
       event: "Событие"
       contact_type: "Тип контакта"
+      person: "Сотрудник"
     attributes:
       event:
         name: "Название события"
@@ -16,7 +17,19 @@ ru:
         contact_type_id: "Тип контакта"
         event_id: "Результат"
         comment: "Содержание разговора"
-          
+        person_id: "Содрудник"
+        person_name: "Сотрудник (вне штата)"
+        phone: "Телефон"
+      person:
+        fio: "Фамилия, Имя"
+        appoint: "Должность"
+        user_id: "Аккаунт"
+        phone: "Телефон"
+        phone2: "Телефон (2)"
+        phone3: "Телефон (3)"
+        email: "Email"
+        email2: "Email (2)"          
+        coomment: "Комментарий"
   helpers:
    submit:
      create: 'Создать запись'

@@ -1,6 +1,7 @@
 #encoding: utf-8;
 class FirmsController < ApplicationController
   before_filter :require_user
+  before_filter :find_firm 
   # GET /firms
   # GET /firms.json
   def index
@@ -73,4 +74,10 @@ class FirmsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+ protected  
+  def find_firm
+    @firm = Firm.find(params[:firm_id]) if params[:firm_id]    
+  end
+  
 end

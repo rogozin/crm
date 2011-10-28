@@ -9,6 +9,7 @@ gem 'mysql2'
 gem 'russian'
 gem 'will_paginate'
 gem 'tinymce-rails'
+gem 'dalli'
 
 
 # Gems used only for assets and not required

@@ -31,14 +31,18 @@ body {
 
 h1 {
     font-size:20px; padding:5px 0;
-    &.with-subtitle {color:$menu-color; border-bottom:1px solid $menu-color;margin-bottom:5px;}    
+    &.with-subtitle {color:$menu-color; margin-bottom:5px;}    
 }
 
 h2 { 
     font-size:16px; padding:5px 0;            
+    &.subtitle {border-top:1px solid $menu-color;}
 }
 
-
+#navigation { 
+  text-align:right;
+  margin-top:5px;
+}
 
 div, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
@@ -68,14 +72,16 @@ a {
 	behavior: url(/javascripts/PIE.htc);
 }
 
-#notice {
+#notice, #alert {
   margin: 5px 0;
   padding: 5px;
 //  background-color: lighten($menu_color, 10%); 
-  background-color: #90EE90; 
   color:$menu_color; 
   @extend .corner-all;
   }
+  
+#notice { background-color: #90EE90; }
+#alert { background-color: $alert_color; color: $body_color; }
 
 
 
@@ -91,6 +97,7 @@ a {
 #container {
  background-color:#fff;
  min-height:400px;
+ padding-bottom:10px;
  }
 
  
@@ -246,7 +253,7 @@ select {background-color: white;}
 
 
 div {
-  &.field {
+  &.field, &.b-formfield-div {
       margin-bottom: 10px; 
       clear:both;
       text-align:right;
@@ -261,7 +268,7 @@ div {
         vertical-align:super;
       }
      input, textarea, select { border: 1px solid $base_color; } 
-     input[type="text"], textarea, &.default-select select {
+     input[type="text"], input[type="password"], textarea, &.default-select select {
         width:220px;
      } 
      textarea {height:40px;}
@@ -324,7 +331,7 @@ p  {
    text-align:left;
    width:100%;
    clear:both;
-   textarea {width:600px; height:200px;}
+   textarea {width:100%; height:200px;}
  } 
  
  .event_poor { background-color:#FFC0CB} 

@@ -1,11 +1,9 @@
 Crm::Application.routes.draw do
   
 
-  get "persons/index"
-
-  match "/directories" => "directories#index"
+  match "/directories" => "directories#index", :as => :directories
   match "/contacts" => "contacts#my_contacts"
-  match "/stats" => "persons#stats"
+  match "/stats" => "users#stats"
   
 
   resources :contact_types
@@ -16,7 +14,8 @@ Crm::Application.routes.draw do
   mount Auth::Engine => "/auth", :as => :auth_engine
   resources :clients, :controller => "firms", :as => "firms" do
       resources :contacts
-      resources :persons, :only => [:index]
+      resources :persons
+      resources :users, :only => [:index]
     end
     
   # The priority is based upon order of creation:

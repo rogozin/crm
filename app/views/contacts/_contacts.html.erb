@@ -6,6 +6,8 @@
     <th>Клиент</th>
     <th>Город</th>
     <% end -%>
+    <th>Сотрудник</th>
+    <th>Телефон</th>
     <th>Тип</th>      
     <th>Событие</th>
     <th>Следующий контакт</th>
@@ -17,9 +19,11 @@
     <td><%= link_to image_tag('edit.png'), edit_firm_contact_path(contact.firm, contact) %></td>
     <td><%= I18n.l(contact.current_date, :format => :long) %></td>
     <% unless @firm -%>
-    <td><%= firm_name(contact.firm) %></td>
+    <td><%= link_to firm_name(contact.firm), edit_firm_path(contact.firm) %></td>
     <td><%= contact.firm.city %></td>       
     <% end -%>
+    <td><%= link_to_if contact.person.present?, person_name(contact), edit_firm_person_path(contact.firm, contact.person.present? ? contact.person : 0) %></td>
+    <td><%= contact.phone %></td>
     <td><%= contact.contact_type.name %></td>
     <%=  content_tag :td, contact.event.name, :class => event_status_class_name(contact.event.status) %>
     <td><%= I18n.l(contact.next_date, :format => :long) %></td>    

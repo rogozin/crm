@@ -1,6 +1,9 @@
 <%= render :partial => 'shared/sub_menu_firm' %>
-<% page_title(@firm.short_name, true, "Пользователи") -%>
+<% page_title(@firm.short_name, true, "Сотрудники") -%>
 
+<div class="b-command-menu">
+<%= link_to 'Новый сотрудник', new_firm_person_path  %>
+</div>
 
 <div id="persons" class="table_data">
 <%= render :partial => "persons" %>

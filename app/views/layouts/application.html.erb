@@ -28,8 +28,14 @@
      <%- flash.each do |name, msg| -%>
     <%= content_tag :div, raw(msg), :id => name  if name.to_s.index("notice") or name.to_s.index("alert") %>
   <%- end -%>
+    <div class="grid_8 alpha">
     <%= content_tag(:h1, yield(:page_title), :class => content_for?(:page_subtitle) ? "with-subtitle" : nil ) if content_for?(:page_title) %>
-    <%= content_tag(:h2, yield(:page_subtitle)) if content_for?(:page_subtitle) if  content_for?(:page_subtitle) %> 
+    </div>
+    <div class="grid_4 omega" id="navigation">
+    <%= yield(:navigation) %>
+    </div>
+    <div class="clear"></div>
+    <%= content_tag(:h2, yield(:page_subtitle), :class => "subtitle") if content_for?(:page_subtitle) if  content_for?(:page_subtitle) %> 
     <%= yield %>
   </div>
 </div>

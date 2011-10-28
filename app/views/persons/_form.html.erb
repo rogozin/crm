@@ -1,0 +1,52 @@
+<%= form_for([@firm,@person], :html => {:class => "one_line_form"} ) do |f| %>
+ 
+  <%= render :partial => "shared/error_messages", :locals => {:target => @person } if @person.errors.any? %>
+     <%= f.hidden_field :firm_id %> 
+<div class="grid_5 alpha">
+  <div class="field default-select">
+    <%= f.label :user_id %>
+    <%= f.select :user_id, options_from_collection_for_select(@users, 'id', 'username', @person.user_id), { :include_blank => "<-Укажите аккаунт сотрудника ->" } %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :fio %>
+    <%= f.text_field :fio %>
+  </div>
+ <div class="field">
+    <%= f.label :appoint %>
+    <%= f.text_field :appoint %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %>
+    <%= f.text_field :phone %>
+  </div>
+  <div class="field">
+    <%= f.label :phone2 %>
+    <%= f.text_field :phone2 %>
+  </div>
+  <div class="field">
+    <%= f.label :phone3 %>
+    <%= f.text_field :phone3 %>
+  </div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :email2 %>
+    <%= f.text_field :email2 %>
+  </div>  
+  </div>  
+  <div class="grid_7 omega">
+   <p class="label">Комментарий:</p>
+    <div class="tinymce">
+      <%= f.text_area :comment %>
+   </div>
+  </div>
+  <div class="clear"></div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<div class="clear"></div>

@@ -1,9 +1,6 @@
 #encoding: utf-8;
-class ContactsController < ApplicationController
-  before_filter :require_user
-  
+class ContactsController < FirmsController
   before_filter :get_data, :only => [:create, :update, :new, :edit]
-  before_filter :find_firm
   
   # GET /contacts
   # GET /contacts.json
@@ -28,7 +25,7 @@ class ContactsController < ApplicationController
   # GET /contacts/new
   # GET /contacts/new.json
   def new
-    @contact = Contact.new(:firm => @firm, :created_by => current_user.id)
+    @contact = Contact.new(:firm => @firm)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,7 +58,7 @@ class ContactsController < ApplicationController
   # PUT /contacts/1.json
   def update
     @contact = Contact.find(params[:id])
-    
+    @contact.person_id = nil  if params[:contact][:person_name].present?
     respond_to do |format|
       if @contact.update_attributes(params[:contact].merge(:updated_by => current_user.id))
         format.html { redirect_to firm_contacts_path(@firm), :notice =>  "#{ Contact.model_name.human } успешно изменен."}
@@ -90,6 +87,7 @@ class ContactsController < ApplicationController
   def get_data
     @events = Event.order("name")
     @contact_types = ContactType.order("name")
+    @persons = Person.where(:firm_id => @firm.id).order("fio")
   end
   
   def find_firm
