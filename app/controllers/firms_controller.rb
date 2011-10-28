@@ -6,7 +6,7 @@ class FirmsController < BaseController
   def index
     params[:page] ||=1
     params[:per_page] ||=30
-    @firms = Firm.order("short_name").paginate(:page => params[:page], :per_page => params[:per_page])
+    @firms = Firm.order("short_name, name").paginate(:page => params[:page], :per_page => params[:per_page])
 
     respond_to do |format|
       format.html # index.html.erb

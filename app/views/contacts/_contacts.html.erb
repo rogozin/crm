@@ -6,10 +6,12 @@
     <th>Клиент</th>
     <th>Город</th>
     <% end -%>
+    <% if @firm -%>
     <th>Сотрудник</th>
-    <th>Телефон</th>
+    <th>Телефон</th>      
+    <% end -%>
     <th>Тип</th>      
-    <th>Событие</th>
+    <th>Разговор</th>
     <th>Следующий контакт</th>
     <th></th>
   </tr>
@@ -17,15 +19,20 @@
 <% @contacts.each do |contact| %>
   <tr>
     <td><%= link_to image_tag('edit.png'), edit_firm_contact_path(contact.firm, contact) %></td>
-    <td><%= I18n.l(contact.current_date, :format => :long) %></td>
+    <%= content_tag :td , :class => event_status_class_name(contact.event.status) do %>    
+       <% concat I18n.l(contact.current_date, :format => :long) %>
+       <% concat content_tag(:p, contact.event.name, :class => "smalltext") %>
+       <% end -%>
     <% unless @firm -%>
     <td><%= link_to firm_name(contact.firm), edit_firm_path(contact.firm) %></td>
     <td><%= contact.firm.city %></td>       
     <% end -%>
+    <% if @firm -%>
     <td><%= link_to_if contact.person.present?, person_name(contact), edit_firm_person_path(contact.firm, contact.person.present? ? contact.person : 0) %></td>
-    <td><%= contact.phone %></td>
+    <td><%= contact.phone %></td>      
+    <% end -%>
     <td><%= contact.contact_type.name %></td>
-    <%=  content_tag :td, contact.event.name, :class => event_status_class_name(contact.event.status) %>
+    <td><%= content_tag(:p,  truncate(sanitize(contact.comment), :length => 200, :omission => "..."), :class => "smalltext") %></td>
     <td><%= I18n.l(contact.next_date, :format => :long) %></td>    
     <td><%= link_to image_tag('bin.png'), firm_contact_path(contact.firm, contact), confirm: 'Удалить, вы уверены?', method: :delete %></td>
   </tr>
