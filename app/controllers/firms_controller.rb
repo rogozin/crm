@@ -6,8 +6,10 @@ class FirmsController < BaseController
   def index
     params[:page] ||=1
     params[:per_page] ||=30
-    @firms = Firm.order("short_name, name").paginate(:page => params[:page], :per_page => params[:per_page])
-
+    @firms = Firm.scoped
+    @firms = @firms.where("short_name like :request or name like :request", {:request => "%#{params[:name]}%"})
+    @firms = @firms.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @firms }

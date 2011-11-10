@@ -4,6 +4,17 @@ module ApplicationHelper
       image_tag(checked ? 'checked.gif' : 'unchecked.gif', :id=>id) 
   end
 
+  def sort_column(column_name, label)
+    direction = (current_direction(column_name) == "desc" ? "asc" : "desc")
+    direction_label = ""
+    direction_label = (direction == "desc" ? "(А-Я)" : "(Я-А)") if params[:sort]==column_name
+    link_to(label + direction, {:sort => column_name, :direction => direction})
+  end
+
+  def current_direction(sort_column)
+    params[:direction] == "desc" ?  "desc" : "asc" if params[:sort] == sort_column
+  end
+
     def tab(*args)
     options = {:label => args.first.to_s}
     if args.last.is_a?(Hash)
