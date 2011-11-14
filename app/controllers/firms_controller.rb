@@ -6,7 +6,7 @@ class FirmsController < BaseController
   def index
     params[:page] ||=1
     params[:per_page] ||=30
-    @firms = Firm.scoped
+    @firms = Client.scoped
     @firms = @firms.where("short_name like :request or name like :request", {:request => "%#{params[:name]}%"})
     @firms = @firms.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
     
@@ -19,7 +19,7 @@ class FirmsController < BaseController
   # GET /firms/new
   # GET /firms/new.json
   def new
-    @firm = Firm.new
+    @firm = Client.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -29,17 +29,17 @@ class FirmsController < BaseController
 
   # GET /firms/1/edit
   def edit
-    @firm = Firm.find(params[:id])
+    @firm = Client.find(params[:id])
   end
 
   # POST /firms
   # POST /firms.json
   def create
-    @firm = Firm.new(params[:firm])
+    @firm = Client.new(params[:firm])
 
     respond_to do |format|
       if @firm.save
-        format.html { redirect_to edit_firm_path(@firm), :notice =>  "Новый #{ Firm.model_name.human } успешно создан." }
+        format.html { redirect_to edit_firm_path(@firm), :notice =>  "Новый #{ Client.model_name.human } успешно создан." }
         format.json { render json: @firm, status: :created, location: @firm }
       else
         format.html { render action: "new" }
@@ -51,11 +51,11 @@ class FirmsController < BaseController
   # PUT /firms/1
   # PUT /firms/1.json
   def update
-    @firm = Firm.find(params[:id])
+    @firm = Client.find(params[:id])
 
     respond_to do |format|
       if @firm.update_attributes(params[:firm])
-        format.html { redirect_to edit_firm_path(@firm), :notice =>  "#{ Firm.model_name.human } успешно изменен."}
+        format.html { redirect_to edit_firm_path(@firm), :notice =>  "#{ Client.model_name.human } успешно изменен."}
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -67,20 +67,20 @@ class FirmsController < BaseController
   # DELETE /firms/1
   # DELETE /firms/1.json
   def destroy
-    @firm = Firm.find(params[:id])
-    return redirect_to firms_path, :alert => "Не могу удалить. На этом клиенте висят персоны" if Person.exists?(:firm_id => @firm.id)
-    return redirect_to firms_path, :alert => "Не могу удалить. На этом клиенте висят контакты" if Contact.exists?(:firm_id => @firm.id)
+    @firm = Client.find(params[:id])
+    return redirect_to firms_path, :alert => "Не могу удалить. На этом клиенте висят персоны" if @firm.persons.present?
+    return redirect_to firms_path, :alert => "Не могу удалить. На этом клиенте висят контакты" if @firm.contacts.present?
     @firm.destroy
 
     respond_to do |format|
-      format.html { redirect_to firms_url, :notice =>  "#{ Firm.model_name.human } удален." }
+      format.html { redirect_to firms_url, :notice =>  "#{ Client.model_name.human } удален." }
       format.json { head :ok }
     end
   end
   
  protected  
   def find_firm
-    @firm = Firm.find(params[:firm_id]) if params[:firm_id]    
+    @firm = Client.find(params[:firm_id]) if params[:firm_id]    
   end
   
 end
