@@ -116,6 +116,8 @@ table
       background-color:$base-color;
       color:$body-color;
       font-weight:bold;
+      a, a:visited {color:$body-color;}
+      a:hover {color: lighten($body-color, 10%);}
   }
   td { font-size:0.9em; }
  

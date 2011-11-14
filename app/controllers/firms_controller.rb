@@ -68,6 +68,8 @@ class FirmsController < BaseController
   # DELETE /firms/1.json
   def destroy
     @firm = Firm.find(params[:id])
+    return redirect_to firms_path, :alert => "Не могу удалить. На этом клиенте висят персоны" if Person.exists?(:firm_id => @firm.id)
+    return redirect_to firms_path, :alert => "Не могу удалить. На этом клиенте висят контакты" if Contact.exists?(:firm_id => @firm.id)
     @firm.destroy
 
     respond_to do |format|

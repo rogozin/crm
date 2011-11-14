@@ -5,14 +5,17 @@ module ApplicationHelper
   end
 
   def sort_column(column_name, label)
-    direction = (current_direction(column_name) == "desc" ? "asc" : "desc")
-    direction_label = ""
-    direction_label = (direction == "desc" ? "(А-Я)" : "(Я-А)") if params[:sort]==column_name
-    link_to(label + direction, {:sort => column_name, :direction => direction})
+    direction_label = " "
+    direction_label = (current_direction == "desc" ? " (Я-А)" : " (А-Я)") if params[:sort].to_s == column_name.to_s
+    link_to(label + direction_label , params.merge({:sort => column_name, :direction => reverse_direction}))
   end
 
-  def current_direction(sort_column)
-    params[:direction] == "desc" ?  "desc" : "asc" if params[:sort] == sort_column
+  def current_direction
+     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+  
+  def reverse_direction
+     current_direction == "asc" ? "desc" : "asc"
   end
 
     def tab(*args)

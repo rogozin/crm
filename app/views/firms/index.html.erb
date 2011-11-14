@@ -2,7 +2,7 @@
 
 <div id="filter">
 <%= form_tag firms_path, :method => :get do %>
-Поиск по названию: <%= text_field_tag :name, params[:name] %>
+Поиск по названию(полному или краткому): <%= text_field_tag :name, params[:name] %>
 <%= submit_tag "Найти" , :name => nil%>
 <% end -%>
 </div>
@@ -17,10 +17,10 @@
   <tr>
     <th></th>
     <th><%= sort_column :name, "Полное название" %></th>
-    <th><%= current_direction("short_name") %><%= sort_column :short_name, "Краткое название" %></th>
-    <th>Город</th>
-    <th>Телефон</th>
-    <th>Создан</th>
+    <th><%= sort_column :short_name, "Краткое название" %></th>
+    <th><%= sort_column :city, "Город" %></th>
+    <th><%= sort_column :phone, "Телефон" %></th>
+    <th><%= sort_column :created_at, "Создан" %></th>
     <th></th>
   </tr>
 

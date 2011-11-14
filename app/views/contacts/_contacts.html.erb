@@ -1,7 +1,7 @@
 <table>
   <tr>
     <th></th>
-    <th>Дата</th>
+    <th>Дата<%#= sort_column :current_date, "Дата" %></th>
     <% unless @firm -%>
     <th>Клиент</th>
     <th>Город</th>
@@ -12,7 +12,7 @@
     <% end -%>
     <th>Тип</th>      
     <th>Разговор</th>
-    <th>Следующий контакт</th>
+    <th>Следующий контакт<%#= sort_column :next_date, "Следующий контакт" %></th>
     <th></th>
   </tr>
 
@@ -24,11 +24,11 @@
        <% concat content_tag(:p, contact.event.name, :class => "smalltext") %>
        <% end -%>
     <% unless @firm -%>
-    <td><%= link_to firm_name(contact.firm), edit_firm_path(contact.firm) %></td>
-    <td><%= contact.firm.city %></td>       
+    <td><%= link_to firm_name(contact.firm), edit_firm_path(contact.firm) if contact.firm %></td>
+    <td><%= contact.firm.city if contact.firm %></td>       
     <% end -%>
     <% if @firm -%>
-    <td><%= link_to_if contact.person.present?, person_name(contact), edit_firm_person_path(contact.firm, contact.person.present? ? contact.person : 0) %></td>
+    <td><%= link_to_if contact.person.present?, person_name(contact), edit_firm_person_path(contact.firm, contact.person.present? ? contact.person : 0) if contact.persom %></td>
     <td><%= contact.phone %></td>      
     <% end -%>
     <td><%= contact.contact_type.name %></td>

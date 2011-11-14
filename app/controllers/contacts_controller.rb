@@ -8,6 +8,7 @@ class ContactsController < FirmsController
   def index
     params[:page] ||=1
     params[:per_page] ||=30
+#    params[:sort] = "`current_date`" if params[:sort] == "name"
     @contacts = Contact.where(:firm_id => @firm.id).order("`current_date` desc").paginate(:page => params[:page], :per_page => params[:per_page])
 
     respond_to do |format|
@@ -19,6 +20,7 @@ class ContactsController < FirmsController
   def my_contacts
     params[:page] ||=1
     params[:per_page] ||=30
+#    params[:sort] = "`current_date`" if params[:sort] == "name"
     @contacts = Contact.order("`current_date` desc").paginate(:page => params[:page], :per_page => params[:per_page])    
   end
 
