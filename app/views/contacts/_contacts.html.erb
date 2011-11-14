@@ -28,7 +28,7 @@
     <td><%= contact.firm.city if contact.firm %></td>       
     <% end -%>
     <% if @firm -%>
-    <td><%= link_to_if contact.person.present?, person_name(contact), edit_firm_person_path(contact.firm, contact.person.present? ? contact.person : 0) if contact.persom %></td>
+    <td><%= link_to_if contact.person.present?, person_name(contact), edit_firm_person_path(contact.firm, contact.person.present? ? contact.person : 0) if contact.person %></td>
     <td><%= contact.phone %></td>      
     <% end -%>
     <td><%= contact.contact_type.name %></td>
