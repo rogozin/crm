@@ -3,7 +3,7 @@ class BaseController < ApplicationController
    before_filter :require_user
    before_filter :default_sort
   access_control do
-    allow "Администратор", "Менеджер продаж"
+    allow "Администратор", "Главный менеджер"
   end
 
   protected 

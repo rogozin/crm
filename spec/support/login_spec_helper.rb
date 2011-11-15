@@ -12,9 +12,9 @@ module LoginSpecHelper
   end
   
   def direct_login_as(user_role)
-    user = Factory(user_role)
+    @user = Factory(user_role)
     activate_authlogic    
-    UserSession.create(user)
+    UserSession.create(@user)
   end
   
   def gen_content(length=10)
