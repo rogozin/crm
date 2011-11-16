@@ -1,5 +1,5 @@
 #encoding: utf-8;
-class PersonsController < FirmsController
+class PersonsController < ClientsController
   
   before_filter :firm_users, :except => [:index, :destroy]
   
@@ -22,7 +22,7 @@ class PersonsController < FirmsController
  def create
     @person = Person.new(params[:person].merge(:created_by => current_user.id))
     if @person.save
-      redirect_to firm_persons_path(@firm), :notice =>  "Новый #{ Person.model_name.human } успешно создан." 
+      redirect_to client_persons_path(@firm), :notice =>  "Новый #{ Person.model_name.human } успешно создан." 
     else
       render action: "new" 
     end
@@ -31,7 +31,7 @@ class PersonsController < FirmsController
   def update
     @person = Person.find(params[:id])
     if @person.update_attributes(params[:person].merge(:updated_by => current_user.id))
-      redirect_to firm_persons_path(@firm), :notice => "#{ Person.model_name.human } успешно изменен."
+      redirect_to client_persons_path(@firm), :notice => "#{ Person.model_name.human } успешно изменен."
     else
       render action: "edit"
     end
@@ -40,7 +40,7 @@ class PersonsController < FirmsController
     def destroy
     @person = Person.find(params[:id])
     @person.destroy
-    redirect_to firm_persons_url, :notice =>  "#{ Person.model_name.human } удален." 
+    redirect_to client_persons_url, :notice =>  "#{ Person.model_name.human } удален." 
   end
 
   private 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111028043912) do
+ActiveRecord::Schema.define(:version => 20111116180834) do
 
   create_table "attach_images", :id => false, :force => true do |t|
     t.integer "attachable_id"
@@ -45,6 +45,9 @@ ActiveRecord::Schema.define(:version => 20111028043912) do
     t.integer  "go_cnt"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position",   :default => 1
+    t.integer  "site",       :default => 0
+    t.text     "pages"
   end
 
   create_table "categories", :force => true do |t|
@@ -66,6 +69,14 @@ ActiveRecord::Schema.define(:version => 20111028043912) do
   end
 
   add_index "categories", ["permalink"], :name => "index_categories_on_permalink", :unique => true
+
+  create_table "client_owners", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "user_id"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "commercial_offer_items", :force => true do |t|
     t.integer "commercial_offer_id"
@@ -189,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20111028043912) do
     t.string   "phone2"
     t.string   "phone3"
     t.string   "email2"
+    t.integer  "state_id",                    :default => 1
   end
 
   add_index "firms", ["city"], :name => "index_firms_on_city"
@@ -292,6 +304,22 @@ ActiveRecord::Schema.define(:version => 20111028043912) do
 
   create_table "manufactors", :force => true do |t|
     t.string   "name",       :limit => 80
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "news", :force => true do |t|
+    t.integer  "firm_id",                             :null => false
+    t.integer  "state_id",             :default => 0
+    t.string   "title"
+    t.text     "body"
+    t.text     "permalink"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.integer  "created_by"
+    t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -429,14 +457,16 @@ ActiveRecord::Schema.define(:version => 20111028043912) do
   end
 
   create_table "store_units", :id => false, :force => true do |t|
-    t.integer "store_id",                  :null => false
-    t.integer "product_id",                :null => false
-    t.integer "count",      :default => 0
-    t.time    "updated_at"
-    t.integer "option",     :default => 1
+    t.integer  "store_id",                  :null => false
+    t.integer  "product_id",                :null => false
+    t.integer  "count",      :default => 0
+    t.datetime "updated_at"
+    t.integer  "option",     :default => 1
   end
 
+  add_index "store_units", ["product_id"], :name => "index_store_units_on_product_id"
   add_index "store_units", ["store_id", "product_id"], :name => "index_store_units_on_store_id_and_product_id", :unique => true
+  add_index "store_units", ["store_id"], :name => "index_store_units_on_store_id"
 
   create_table "stores", :force => true do |t|
     t.integer  "supplier_id"

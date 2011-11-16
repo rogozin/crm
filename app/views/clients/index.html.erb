@@ -1,14 +1,14 @@
 <% page_title("Клиенты") -%>
 
 <div id="filter">
-<%= form_tag firms_path, :method => :get do %>
+<%= form_tag clients_path, :method => :get do %>
 Поиск по названию(полному или краткому): <%= text_field_tag :name, params[:name] %>
 <%= submit_tag "Найти" , :name => nil%>
 <% end -%>
 </div>
 
 <div class="b-command-menu">
-  <%= link_to 'Новый клиент', new_firm_path %>
+  <%= link_to 'Новый клиент', new_client_path %>
 </div>
 
 <div id="firms" class="table_data">
@@ -20,19 +20,21 @@
     <th><%= sort_column :short_name, "Краткое название" %></th>
     <th><%= sort_column :city, "Город" %></th>
     <th><%= sort_column :phone, "Телефон" %></th>
+    <th><%= sort_column :state, "Статус" %></th>
     <th><%= sort_column :created_at, "Создан" %></th>
     <th></th>
   </tr>
 
 <% @firms.each do |firm| %>
   <tr>
-    <td><%= link_to image_tag('edit.png'), edit_firm_path(firm) %></td>
+    <td><%= link_to image_tag('edit.png'), edit_client_path(firm) %></td>
     <td><%= firm.name %></td>
     <td><%= firm.short_name %></td>
     <td><%= firm.city %></td>
     <td><%= firm.phone %></td>
+    <td><%= firm.state %></td>
     <td><%= I18n.l(firm.created_at, :format => :long) %></td>
-    <td><%= link_to image_tag('bin.png'), firm_path(firm), confirm: 'Удалить, вы уверены?', method: :delete %></td>
+    <td><%= link_to image_tag('bin.png'), client_path(firm), confirm: 'Удалить, вы уверены?', method: :delete %></td>
   </tr>
 <% end %>
 </table>

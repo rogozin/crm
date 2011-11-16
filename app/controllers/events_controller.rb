@@ -1,5 +1,8 @@
 #encoding: utf-8;
 class EventsController < BaseController
+  access_control do
+    allow "Администратор", "Главный менеджер"
+  end
   # GET /events
   # GET /events.json
   def index

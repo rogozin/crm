@@ -1,6 +1,12 @@
 #encoding: utf-8;
-class FirmsController < BaseController
-  before_filter :find_firm 
+class ClientsController < BaseController
+  before_filter :find_firm
+  before_filter :select_form_data, :only => [:new, :edit, :update, :create]
+  access_control do
+    allow "Администратор", "Главный менеджер", "Менеджер продаж" 
+  end
+  
+   
   # GET /firms
   # GET /firms.json
   def index
@@ -35,11 +41,11 @@ class FirmsController < BaseController
   # POST /firms
   # POST /firms.json
   def create
-    @firm = Client.new(params[:firm])
+    @firm = Client.new(params[:client])
 
     respond_to do |format|
       if @firm.save
-        format.html { redirect_to edit_firm_path(@firm), :notice =>  "Новый #{ Client.model_name.human } успешно создан." }
+        format.html { redirect_to edit_client_path(@firm), :notice =>  "Новый #{ Client.model_name.human } успешно создан." }
         format.json { render json: @firm, status: :created, location: @firm }
       else
         format.html { render action: "new" }
@@ -54,8 +60,8 @@ class FirmsController < BaseController
     @firm = Client.find(params[:id])
 
     respond_to do |format|
-      if @firm.update_attributes(params[:firm])
-        format.html { redirect_to edit_firm_path(@firm), :notice =>  "#{ Client.model_name.human } успешно изменен."}
+      if @firm.update_attributes(params[:client])
+        format.html { redirect_to edit_client_path(@firm), :notice =>  "#{ Client.model_name.human } успешно изменен."}
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -68,19 +74,23 @@ class FirmsController < BaseController
   # DELETE /firms/1.json
   def destroy
     @firm = Client.find(params[:id])
-    return redirect_to firms_path, :alert => "Не могу удалить. На этом клиенте висят персоны" if @firm.persons.present?
-    return redirect_to firms_path, :alert => "Не могу удалить. На этом клиенте висят контакты" if @firm.contacts.present?
+    return redirect_to clients_path, :alert => "Не могу удалить. На этом клиенте висят персоны" if @firm.persons.present?
+    return redirect_to clients_path, :alert => "Не могу удалить. На этом клиенте висят контакты" if @firm.contacts.present?
     @firm.destroy
 
     respond_to do |format|
-      format.html { redirect_to firms_url, :notice =>  "#{ Client.model_name.human } удален." }
+      format.html { redirect_to clients_url, :notice =>  "#{ Client.model_name.human } удален." }
       format.json { head :ok }
     end
   end
   
  protected  
   def find_firm
-    @firm = Client.find(params[:firm_id]) if params[:firm_id]    
+    @firm = Client.find(params[:client_id]) if params[:client_id]    
+  end
+  
+  def select_form_data
+    @states= Client.states.to_a
   end
   
 end

@@ -16,7 +16,7 @@
       <td><%= checked_box_image(person.active?) %></td>
       <td><%= person.username %></td>
       <% unless @firm -%>
-        <td class="no-wrap"><%= link_to firm_name(person.firm), edit_firm_path(person.firm) if person.firm %></td>        
+        <td class="no-wrap"><%= link_to firm_name(person.firm), edit_client_path(person.firm) if person.firm %></td>        
       <% end -%>
       <td><%= person.fio %>
       <p class="smalltext"><%= person.appoint %></p>

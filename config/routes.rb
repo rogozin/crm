@@ -12,7 +12,7 @@ Crm::Application.routes.draw do
 
   root :to => "main#index"
   mount Auth::Engine => "/auth", :as => :auth_engine
-  resources :clients, :controller => "firms", :as => "firms" do
+  resources :clients do
       resources :contacts
       resources :persons
       resources :users, :only => [:index]

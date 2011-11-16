@@ -30,6 +30,8 @@ ru:
         email: "Email"
         email2: "Email (2)"          
         coomment: "Комментарий"
+      client:
+        state_id: "Статус"  
   helpers:
    submit:
      create: 'Создать запись'

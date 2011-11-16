@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  belongs_to :firm
+  belongs_to :client, :foreign_key => :firm_id
   belongs_to :user
   has_many :contacts
   validates_presence_of :firm_id, :fio

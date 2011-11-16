@@ -1,5 +1,5 @@
 #encoding: utf-8;
-class UsersController < FirmsController
+class UsersController < ClientsController
   
   def index
     params[:page] ||= 1

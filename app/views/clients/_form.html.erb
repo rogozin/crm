@@ -2,7 +2,11 @@
  
   <%= render :partial => "shared/error_messages", :locals => {:target => @firm } if @firm.errors.any? %>
 <div class="grid_5 alpha">
-  <div class="field">
+<div class="field default-select">
+    <%= f.label :state_id %>
+    <%= f.select :state_id, options_for_select(@states, @firm.state_id) %>
+  </div>
+  <div class="field">  
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>

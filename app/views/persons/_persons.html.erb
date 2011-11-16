@@ -9,14 +9,14 @@
   <th></th>
   <% @persons.each do |person| -%>
     <tr>
-    <td><%= link_to image_tag('edit.png'), edit_firm_person_path(@firm, person)  %></td>
+    <td><%= link_to image_tag('edit.png'), edit_client_person_path(@firm, person)  %></td>
       <td><%= person.user.username if person.user %></td>
       <td><%= person.fio %></td>
       <td><%= person.appoint %></td>
       <td><%= person.phone %></td>
       <td><%= person.email %></td>
       <td><%= I18n.l(person.created_at, :format => :long) %></td>
-      <td><%= link_to image_tag('bin.png'), firm_person_path(@firm, person), method: :delete, confirm: "Удалить? Вы уверены?" %></td>
+      <td><%= link_to image_tag('bin.png'), client_person_path(@firm, person), method: :delete, confirm: "Удалить? Вы уверены?" %></td>
     </tr>
   <% end -%>
 </table>

@@ -1,5 +1,5 @@
 #encoding: utf-8;
-class ContactsController < FirmsController
+class ContactsController < ClientsController
   before_filter :get_data, :only => [:create, :update, :new, :edit]
   
   # GET /contacts
@@ -47,7 +47,7 @@ class ContactsController < FirmsController
     
     respond_to do |format|
       if @contact.save
-        format.html { redirect_to firm_contacts_path(@firm), :notice =>  "Новый #{ Contact.model_name.human } успешно создан."  }
+        format.html { redirect_to client_contacts_path(@firm), :notice =>  "Новый #{ Contact.model_name.human } успешно создан."  }
         format.json { render json: @contact, status: :created, location: @contact }
       else
         format.html { render action: "new" }
@@ -63,7 +63,7 @@ class ContactsController < FirmsController
     @contact.person_id = nil  if params[:contact][:person_name].present?
     respond_to do |format|
       if @contact.update_attributes(params[:contact].merge(:updated_by => current_user.id))
-        format.html { redirect_to firm_contacts_path(@firm), :notice =>  "#{ Contact.model_name.human } успешно изменен."}
+        format.html { redirect_to client_contacts_path(@firm), :notice =>  "#{ Contact.model_name.human } успешно изменен."}
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -79,7 +79,7 @@ class ContactsController < FirmsController
     @contact.destroy
 
     respond_to do |format|
-      format.html { redirect_to contacts_url, :notice =>  "'#{ Contact.model_name.human } удален.'" }
+      format.html { redirect_to client_contacts_path(@firm), :notice =>  "'#{ Contact.model_name.human } удален.'" }
       format.json { head :ok }
     end
   end
@@ -91,9 +91,6 @@ class ContactsController < FirmsController
     @contact_types = ContactType.order("name")
     @persons = Person.where(:firm_id => @firm.id).order("fio")
   end
-  
-  def find_firm
-    @firm  = Firm.find(params[:firm_id]) if params[:firm_id]
-  end
+
   
 end
