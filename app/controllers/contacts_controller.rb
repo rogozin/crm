@@ -1,7 +1,7 @@
 #encoding: utf-8;
 class ContactsController < ClientsController
+  before_filter :find_client
   before_filter :get_data, :only => [:create, :update, :new, :edit]
-  
   # GET /contacts
   # GET /contacts.json
   
@@ -27,7 +27,7 @@ class ContactsController < ClientsController
   # GET /contacts/new
   # GET /contacts/new.json
   def new
-    @contact = Contact.new(:firm => @firm)
+    @contact = Contact.new(:client => @firm)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,10 +43,10 @@ class ContactsController < ClientsController
   # POST /contacts
   # POST /contacts.json
   def create
-    @contact = Contact.new(params[:contact].merge(:created_by => current_user.id))
-    
+    @contact = Contact.new(params[:contact].merge(:created_by => current_user.id))    
     respond_to do |format|
       if @contact.save
+        @contact.client.my!(current_user) if @firm.free? 
         format.html { redirect_to client_contacts_path(@firm), :notice =>  "Новый #{ Contact.model_name.human } успешно создан."  }
         format.json { render json: @contact, status: :created, location: @contact }
       else

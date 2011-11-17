@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20111116180834) do
     t.integer  "go_cnt"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position",   :default => 1
+    t.integer  "position",   :default => 0
     t.integer  "site",       :default => 0
     t.text     "pages"
   end
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(:version => 20111116180834) do
   create_table "client_owners", :force => true do |t|
     t.integer  "client_id"
     t.integer  "user_id"
-    t.boolean  "active"
+    t.boolean  "active",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -318,6 +318,23 @@ ActiveRecord::Schema.define(:version => 20111116180834) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "people", :force => true do |t|
+    t.integer  "firm_id",    :null => false
+    t.integer  "user_id"
+    t.string   "fio"
+    t.string   "appoint"
+    t.string   "phone"
+    t.string   "phone2"
+    t.string   "phone3"
+    t.string   "email"
+    t.string   "email2"
+    t.text     "comment"
     t.integer  "created_by"
     t.integer  "updated_by"
     t.datetime "created_at"

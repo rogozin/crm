@@ -1,6 +1,7 @@
 #encoding: utf-8;
 class UsersController < ClientsController
-  
+   before_filter :find_client
+   
   def index
     params[:page] ||= 1
     params[:per_page] ||= 30

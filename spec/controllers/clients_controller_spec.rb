@@ -31,32 +31,76 @@ describe ClientsController do
 
   describe "GET new" do
     it "assigns a new firm as @firm" do
+      direct_login_as :first_manager
       get :new
       assigns(:firm).should be_a_new(Client)
+      assigns(:states).should have(3).items
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested firm as @firm" do
-      firm = Factory.create(:client)
-      get :edit, :id => firm.id.to_s
-      assigns(:firm).should eq(firm)
+    context 'главный менеджер' do
+      before(:each) do
+        direct_login_as :first_manager        
+        @firm = Factory.create(:client)
+      end
+          
+      it "может редактировать любого клиента" do
+        get :edit, :id => @firm.id.to_s
+        assigns(:firm).should eq(@firm)
+      end
     end
+    
+    context 'второй менеджер' do
+      before(:each) do
+        direct_login_as :second_manager        
+        @firm = Factory.create(:client, :state_id => 0)      
+      end
+    
+      it "может редактировать только своего клиента" do
+        @firm.client_owners.create(:user_id => @user.id)
+        get :edit, :id => @firm.id.to_s
+        assigns(:firm).should eq(@firm)
+      end
+    
+       it "Дятла или индюка нельзя перевести в аисты просто так" do
+        @firm.update_attribute(:state_id, 1)
+        get :edit, :id => @firm.id.to_s
+        assigns(:states).should have(2).items
+      end
+    
+      it "второй менеджер может редактировать индюка или дятла" do
+        @firm.update_attribute(:state_id, 1)
+        get :edit, :id => @firm.id.to_s
+        assigns(:firm).should eq(@firm)
+      end    
+
+      it "второй менеджер не может открыть для редактирования чужого клиента" do
+        @firm.client_owners.create(:user_id => 999)
+        get :edit, :id => @firm.id.to_s
+        response.should be_not_found
+      end
+    end
+    
   end
 
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Firm" do
+        direct_login_as :second_manager
         expect {
-          post :create, :firm => {:name => "Рога и копыта" }
+          post :create, :client => {:name => "Рога и копыта" }
         }.to change(Client, :count).by(1)
       end
 
       it "assigns a newly created firm as @firm" do
-        post :create, :firm => {:name => "Рога и копыта" }
+        direct_login_as :second_manager
+        post :create, :client => {:name => "Рога и копыта" }
         assigns(:firm).should be_a(Client)
         assigns(:firm).should be_persisted
-        response.should redirect_to(Client.last)
+        assigns(:firm).state_id.should be_zero
+        assigns(:firm).users.should eq [@user]
+        response.should redirect_to(edit_client_path(Client.last))
       end
     end
 
@@ -73,21 +117,13 @@ describe ClientsController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested firm" do
-        firm = Factory(:client)
-        # Assuming there are no other firms in the database, this
-        # specifies that the Firm created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Firm.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => firm.id, :firm => {'these' => 'params'}
-      end
-
       it "assigns the requested firm as @firm" do
-        firm = Factory(:client)
-        put :update, :id => firm.id, :firm => {:short_name => "dsfds"}
-        assigns(:firm).should eq(firm)
-        response.should redirect_to(firm)        
+        direct_login_as :first_manager
+        @firm = Factory(:client)
+        put :update, :id => @firm.id, :client => {:short_name => "Копыта и ко"}
+        assigns(:firm).should eq(@firm)
+        assigns(:firm).short_name.should eq "Копыта и ко"
+        response.should redirect_to(edit_client_path(@firm) )
       end
     end
 
@@ -96,26 +132,34 @@ describe ClientsController do
         firm = Factory(:client)
         # Trigger the behavior that occurs when invalid params are submitted
         Firm.any_instance.stub(:save).and_return(false)
-        put :update, :id => firm.id.to_s, :firm => {}
+        put :update, :id => firm.id.to_s, :client => {}
         assigns(:firm).should eq(firm)
         response.should render_template("edit")        
       end
     end
   end
-
-  describe "DELETE destroy" do
-    it "destroys the requested firm" do
-      firm = Factory(:client)
+  
+  describe "DELETE destroy" do    
+    before(:each) do
+      @firm = Factory(:client)
+    end
+    
+    it "Главный менеджер может удалить фирму" do
+      direct_login_as :first_manager
       expect {
-        delete :destroy, :id => firm.id.to_s
+        delete :destroy, :id => @firm.id.to_s
       }.to change(Client, :count).by(-1)
-    end
+      response.should redirect_to(clients_path)
+    end    
 
-    it "redirects to the firms list" do
-      firm = Factory(:client)
-      delete :destroy, :id => firm.id.to_s
-      response.should redirect_to(firms_url)
+    it 'Второй менеджер не может удалять фирмы' do
+      direct_login_as :second_manager
+      expect {
+        delete :destroy, :id => @firm.id.to_s
+      }.to change(Client, :count).by(0)
+      response.should "401"
     end
-  end
+    
+  end  
 
 end

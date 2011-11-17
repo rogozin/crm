@@ -2,10 +2,6 @@
  
   <%= render :partial => "shared/error_messages", :locals => {:target => @firm } if @firm.errors.any? %>
 <div class="grid_5 alpha">
-<div class="field default-select">
-    <%= f.label :state_id %>
-    <%= f.select :state_id, options_for_select(@states, @firm.state_id) %>
-  </div>
   <div class="field">  
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -54,6 +50,10 @@
     <%= f.label :url %>
     <%= f.text_field :url %>
   </div>   
+<div class="field default-select">
+    <%= f.label :state_id %>
+    <%= f.select :state_id, options_for_select(@states, @firm.state_id),  { :include_blank => "<= Статус =>" } %>
+  </div>  
 </div>  
 <div class="grid_7 omega">
  <p class="label">Комментарий:</p>

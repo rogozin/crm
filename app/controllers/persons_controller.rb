@@ -1,6 +1,7 @@
 #encoding: utf-8;
 class PersonsController < ClientsController
   
+  before_filter :find_client
   before_filter :firm_users, :except => [:index, :destroy]
   
   def index
@@ -11,7 +12,7 @@ class PersonsController < ClientsController
   
   
   def new
-    @person = Person.new(:firm => @firm)
+    @person = Person.new(:client => @firm)
   end
   
   

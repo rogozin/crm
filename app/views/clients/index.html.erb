@@ -15,24 +15,26 @@
 
 <table>
   <tr>
-    <th></th>
+    <th><%= sort_column :id, "ID" %></th>
     <th><%= sort_column :name, "Полное название" %></th>
     <th><%= sort_column :short_name, "Краткое название" %></th>
     <th><%= sort_column :city, "Город" %></th>
     <th><%= sort_column :phone, "Телефон" %></th>
     <th><%= sort_column :state, "Статус" %></th>
+    <th>Менеджеры</th>
     <th><%= sort_column :created_at, "Создан" %></th>
     <th></th>
   </tr>
 
 <% @firms.each do |firm| %>
   <tr>
-    <td><%= link_to image_tag('edit.png'), edit_client_path(firm) %></td>
-    <td><%= firm.name %></td>
+    <td><%= firm.id %></td>
+    <td><%= link_to firm.name, edit_client_path(firm) %></td>
     <td><%= firm.short_name %></td>
     <td><%= firm.city %></td>
     <td><%= firm.phone %></td>
     <td><%= firm.state %></td>
+     <td><%= firm.active_owners.map(&:fio).join(', ') %></td>
     <td><%= I18n.l(firm.created_at, :format => :long) %></td>
     <td><%= link_to image_tag('bin.png'), client_path(firm), confirm: 'Удалить, вы уверены?', method: :delete %></td>
   </tr>

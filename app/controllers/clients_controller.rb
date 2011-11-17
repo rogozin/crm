@@ -1,9 +1,10 @@
 #encoding: utf-8;
 class ClientsController < BaseController
-  before_filter :find_firm
+  before_filter :find_firm, :only => [:new, :edit, :update, :create, :destroy]
   before_filter :select_form_data, :only => [:new, :edit, :update, :create]
   access_control do
-    allow "Администратор", "Главный менеджер", "Менеджер продаж" 
+    allow "Администратор", "Главный менеджер"
+    allow "Менеджер продаж", :except => [:destroy]
   end
   
    
@@ -12,8 +13,8 @@ class ClientsController < BaseController
   def index
     params[:page] ||=1
     params[:per_page] ||=30
-    @firms = Client.scoped
-    @firms = @firms.where("short_name like :request or name like :request", {:request => "%#{params[:name]}%"})
+    @firms = current_user.is_first_manager? ?  Client.scoped : Client.my(current_user.id)
+    @firms = @firms.where("short_name like :request or name like :request", {:request => "%#{params[:name]}%"}) if params[:name].present?
     @firms = @firms.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
     
     respond_to do |format|
@@ -35,16 +36,17 @@ class ClientsController < BaseController
 
   # GET /firms/1/edit
   def edit
-    @firm = Client.find(params[:id])
+#    @firm = Client.find(params[:id])
   end
 
   # POST /firms
   # POST /firms.json
   def create
-    @firm = Client.new(params[:client])
+    @firm = Client.new(params[:client].merge(:state_id => 0))
 
     respond_to do |format|
       if @firm.save
+        @firm.client_owners.create(:user => current_user)
         format.html { redirect_to edit_client_path(@firm), :notice =>  "Новый #{ Client.model_name.human } успешно создан." }
         format.json { render json: @firm, status: :created, location: @firm }
       else
@@ -57,7 +59,7 @@ class ClientsController < BaseController
   # PUT /firms/1
   # PUT /firms/1.json
   def update
-    @firm = Client.find(params[:id])
+#    @firm = Client.find(params[:id])
 
     respond_to do |format|
       if @firm.update_attributes(params[:client])
@@ -86,11 +88,18 @@ class ClientsController < BaseController
   
  protected  
   def find_firm
-    @firm = Client.find(params[:client_id]) if params[:client_id]    
+    @firms_scope = current_user.is_first_manager? ? Client.scoped : Client.my(current_user.id)
+    @firm = @firms_scope.find(params[:id]) if params[:id]     
+  end
+  
+  def find_client
+   @firms_scope = current_user.is_first_manager? ? Client.scoped : Client.my(current_user.id)
+   @firm = @firms_scope.find(params[:client_id])  if params[:client_id]
   end
   
   def select_form_data
-    @states= Client.states.to_a
+    @states= Client.states.to_a[0..2]
+    @states.delete_at(0) if @firm && @firm.free?
   end
   
 end
