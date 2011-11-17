@@ -63,6 +63,7 @@ class ClientsController < BaseController
 
     respond_to do |format|
       if @firm.update_attributes(params[:client])
+        @firm.reset_my(current_user) if @firm.state_id_changed? && @firm.state_id_was == 0
         format.html { redirect_to edit_client_path(@firm), :notice =>  "#{ Client.model_name.human } успешно изменен."}
         format.json { head :ok }
       else

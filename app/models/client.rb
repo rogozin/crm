@@ -31,4 +31,7 @@ class Client < Firm
     update_attribute :state_id, 0
   end
   
+  def reset_my!(user)
+    client_owners.where({:user_id => user.id, :active => true}).update_all({:active => false})
+  end
 end

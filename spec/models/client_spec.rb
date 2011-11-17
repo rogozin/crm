@@ -27,6 +27,15 @@ describe Client do
       client1.owners.should eq [user]
       client1.state_id.should be_zero
     end
+
+    it 'reset_my' do
+      client1  = Factory(:client, :state_id => 1)
+      user = Factory(:user)
+      client1.my!(user)
+      client1.reset_my!(user)
+      client1.owners.should eq [user]
+      client1.active_owners.should be_empty
+    end
   end
   
 end
