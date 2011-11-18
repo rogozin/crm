@@ -125,6 +125,16 @@ describe ClientsController do
         assigns(:firm).short_name.should eq "Копыта и ко"
         response.should redirect_to(edit_client_path(@firm) )
       end
+      
+      it 'я выбрасываю аиста в индюки или дятлы' do
+        direct_login_as :first_manager
+        @firm = Factory(:client, :state_id => 1)
+        @firm.my!(@user)
+        put :update, :id => @firm.id, :client => {:state_id => 1}
+        assigns(:firm).state_id.should eq 1
+        assigns(:firm).active_owners.should be_empty 
+      end
+      
     end
 
     describe "with invalid params" do

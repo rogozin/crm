@@ -46,7 +46,7 @@ class ContactsController < ClientsController
     @contact = Contact.new(params[:contact].merge(:created_by => current_user.id))    
     respond_to do |format|
       if @contact.save
-        @contact.client.my!(current_user) if @firm.free? 
+        @contact.client.my!(current_user) if @firm.free?  || current_user.is_first_manager?
         format.html { redirect_to client_contacts_path(@firm), :notice =>  "Новый #{ Contact.model_name.human } успешно создан."  }
         format.json { render json: @contact, status: :created, location: @contact }
       else

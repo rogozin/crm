@@ -9,9 +9,10 @@ class Client < Firm
   
   scope :free, where(:state_id => [1,2])
   scope :my, lambda {|user_id| where("(state_id in (1,2)) or (state_id = 0 and exists (select null from client_owners co where co.client_id = firms.id and co.user_id  = #{user_id} and active = 1))")}
+  after_save :reset_all
 
   def active_owners
-      owners.where(:active => true).order("created_at desc")
+      client_owners.where(:active => true).order("created_at desc")
   end  
   
   def self.states
@@ -32,6 +33,11 @@ class Client < Firm
   end
   
   def reset_my!(user)
-    client_owners.where({:user_id => user.id, :active => true}).update_all({:active => false})
+    self.client_owners.where({:user_id => user.id, :active => true}).update_all("active = 0")
+  end
+  
+  private  
+  def reset_all
+    self.active_owners.update_all("active=0") if state_id_changed? && state_id_was == 0
   end
 end
