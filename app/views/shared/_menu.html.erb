@@ -2,7 +2,7 @@
       <ul>
         <%= tab :clients, :match_path => "/clients", :label=>'Клиенты' %>
         <%= tab :contacts, :url => "/contacts", :label=>'Контакты' %>
-        <%= tab :directories, :label=>'Справочники' %>
+        <%= tab :directories, :label=>'Справочники' if current_user.is_first_manager? %> 
         <%= tab :categories, :url => "/stats", :label=>'Статистика' %>        
       </ul>
     </nav>

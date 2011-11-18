@@ -88,8 +88,10 @@ class ClientsController < BaseController
   
  protected  
   def find_firm
-    @firms_scope = current_user.is_first_manager? ? Client.scoped : Client.my(current_user.id)
-    @firm = @firms_scope.find(params[:id]) if params[:id]     
+    if controller_name == "clients"
+      @firms_scope = current_user.is_first_manager? ? Client.scoped : Client.my(current_user.id)
+      @firm = @firms_scope.find(params[:id]) if params[:id]  
+    end
   end
   
   def find_client

@@ -1,6 +1,10 @@
 <%= render :partial => 'shared/sub_menu_firm' %>
 <% page_title(@firm.short_name, true, "Просмотр информации") -%>
 
+<% content_for :persons do-%>
+<%= render :partial => 'persons' %>
+<% end -%>
+
 <%= render 'form' %>
 
 <%= render :partial => "navigation" %>

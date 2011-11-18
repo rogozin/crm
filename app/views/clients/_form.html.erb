@@ -27,15 +27,15 @@
     <%= f.text_field :subway %>
   </div>
   <div class="field">
-    <%= f.label :phone %>
+    <%= f.label :phone %> <span class="input-helper">+7(495)</span>
     <%= f.text_field :phone %>
   </div> 
   <div class="field">
-    <%= f.label :phone2 %>
+    <%= f.label :phone2 %> <span class="input-helper">+7(495)</span>
     <%= f.text_field :phone2 %>
   </div>   
   <div class="field">
-    <%= f.label :phone3 %>
+    <%= f.label :phone3 %> <span class="input-helper">+7(495)</span>
     <%= f.text_field :phone3 %>
   </div>   
   <div class="field">
@@ -47,7 +47,7 @@
     <%= f.text_field :email2 %>
   </div>              
   <div class="field">
-    <%= f.label :url %>
+    <%= f.label :url %> <span class="input-helper">http://www.</span>
     <%= f.text_field :url %>
   </div>   
 <div class="field default-select">
@@ -60,8 +60,11 @@
     <div class="tinymce">
       <%= f.text_area :comment %>
    </div>
-
+<div id="inline_persons" class="table-data">
+  <%= yield :persons %>
 </div>
+</div>
+
 <div class="clear"></div>
   <div class="actions">
     <%= f.submit %>

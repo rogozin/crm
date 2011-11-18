@@ -1,0 +1,23 @@
+<h3>Сотрудники:</h3>
+
+<table>
+  <th></th>
+  <th>Логин</th>
+  <th>ФИО</th>
+  <th>Должность</th>
+  <th>Телефон</th>
+  <th>Email</th>
+  <% @firm.persons.each do |person| -%>
+    <tr>
+    <td><%= link_to image_tag('edit.png'), edit_client_person_path(@firm, person)  %></td>
+      <td><%= person.user.username if person.user %></td>
+      <td><%= person.fio %></td>
+      <td><%= person.appoint %></td>
+      <td><%= person.phone %></td>
+      <td><%= person.email %></td>
+    </tr>
+  <% end -%>
+</table>
+<div class="b-command-menu">
+<%= link_to 'Новый сотрудник', new_client_person_path(@firm)  %>
+</div>
