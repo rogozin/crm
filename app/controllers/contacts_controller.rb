@@ -2,15 +2,12 @@
 class ContactsController < ClientsController
   before_filter :find_client
   before_filter :get_data, :only => [:create, :update, :new, :edit]
+  before_filter :default_sort, :only => [:index, :my_contacts]
   # GET /contacts
   # GET /contacts.json
   
   def index
-    params[:page] ||=1
-    params[:per_page] ||=30
-#    params[:sort] = "`current_date`" if params[:sort] == "name"
-    @contacts = Contact.where(:firm_id => @firm.id).order("`current_date` desc").paginate(:page => params[:page], :per_page => params[:per_page])
-
+    @contacts = Contact.where(:firm_id => @firm.id).order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @contacts }
@@ -18,10 +15,7 @@ class ContactsController < ClientsController
   end
   
   def my_contacts
-    params[:page] ||=1
-    params[:per_page] ||=30
-#    params[:sort] = "`current_date`" if params[:sort] == "name"
-    @contacts = Contact.order("`current_date` desc").paginate(:page => params[:page], :per_page => params[:per_page])    
+    @contacts = Contact.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])    
   end
 
   # GET /contacts/new
@@ -92,5 +86,11 @@ class ContactsController < ClientsController
     @persons = Person.where(:firm_id => @firm.id).order("fio")
   end
 
+  def default_sort
+    params[:sort]||="`current_date`" 
+    params[:direction]||="desc" 
+    params[:page] ||=1
+    params[:per_page] ||=30    
+  end
   
 end

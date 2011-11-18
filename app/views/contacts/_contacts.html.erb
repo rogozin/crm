@@ -1,7 +1,7 @@
 <table>
   <tr>
     <th></th>
-    <th>Дата<%#= sort_column :current_date, "Дата" %></th>
+    <th><%= sort_column "`current_date`", "Дата" %></th>
     <% unless @firm -%>
     <th>Клиент</th>
     <th>Город</th>
@@ -10,9 +10,9 @@
     <th>Сотрудник</th>
     <th>Телефон</th>      
     <% end -%>
-    <th>Тип</th>      
+    <th><%= sort_column :contact_type_id, "Тип" %></th>      
     <th>Разговор</th>
-    <th>Следующий контакт<%#= sort_column :next_date, "Следующий контакт" %></th>
+    <th><%= sort_column :next_date, "Следующий контакт" %></th>
     <th></th>
   </tr>
 
