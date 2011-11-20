@@ -12,7 +12,7 @@ class Client < Firm
   after_save :reset_all
 
   def active_owners
-      client_owners.where(:active => true).order("created_at desc")
+    client_owners.where(:active => true).order("created_at desc")
   end  
   
   def self.states
@@ -27,8 +27,12 @@ class Client < Firm
     [1,2,3].include?(self.state_id)
   end  
   
+  def my?(user)
+    active_owners.exists?(:user_id => user.id)    
+  end
+  
   def my!(user)
-    client_owners.create(:user => user)
+    client_owners.create(:user_id => user.id)
     update_attribute :state_id, 0
   end
   

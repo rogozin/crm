@@ -20,12 +20,12 @@ describe ClientsController do
       assigns(:firms).should eq([@firm1, @firm2, @firm3])
     end
     
-    it 'Простой менеджер видит своих клиентов, индюков и дятлов' do
+    it 'Простой менеджер видит всех клиентов' do
       direct_login_as :second_manager
       @firm4 = Factory.create(:client, :state_id => 0)
       @firm4.client_owners.create(:active => true, :user_id => @user.id)            
       get :index
-      assigns(:firms).should eq([@firm2, @firm3, @firm4])      
+      assigns(:firms).should eq([@firm1, @firm2, @firm3, @firm4])      
     end
   end
 

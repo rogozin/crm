@@ -15,7 +15,7 @@ class ClientsController < BaseController
     params[:per_page] ||=30
     params[:sort]||="name" 
     params[:direction]||="asc"
-    @firms = current_user.is_first_manager? ?  Client.scoped : Client.my(current_user.id)
+    @firms = Client.scoped
     @firms = @firms.where("short_name like :request or name like :request", {:request => "%#{params[:name]}%"}) if params[:name].present?
     @firms = @firms.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
     
