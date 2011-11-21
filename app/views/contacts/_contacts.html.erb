@@ -24,7 +24,7 @@
        <% concat content_tag(:p, contact.event.name, :class => "smalltext") %>
        <% end -%>
     <% unless @firm -%>
-    <td><%= link_to firm_name(contact.client), edit_client_path(contact.client) if contact.client %></td>
+    <td><%= edit_firm_link(contact.client) if contact.client %></td>
     <td><%= contact.client.city if contact.client %></td>       
     <% end -%>
     <% if @firm -%>

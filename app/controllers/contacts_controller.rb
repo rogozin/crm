@@ -15,7 +15,9 @@ class ContactsController < ClientsController
   end
   
   def my_contacts
-    @contacts = Contact.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])    
+    @contacts = Contact.scoped
+    @contacts = @contacts.where(:created_by => current_user.id) unless current_user.is_first_manager?
+    @contacts = @contacts.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])    
   end
 
   # GET /contacts/new
