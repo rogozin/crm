@@ -29,7 +29,7 @@
 <% @firms.each do |firm| %>
   <tr>
     <td><%= firm.id %></td>
-    <td><%= link_to_if current_user.is_first_manager? || firm.my?(current_user), firm.name, edit_client_path(firm) %></td>
+    <td><%= link_to_if current_user.is_first_manager? || firm.free? || firm.my?(current_user), firm.name, edit_client_path(firm) %></td>
     <td><%= firm.short_name %></td>
     <td><%= firm.city %></td>
     <td><%= firm.phone %></td>
