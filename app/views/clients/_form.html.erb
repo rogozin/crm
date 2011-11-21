@@ -3,7 +3,7 @@
   <%= render :partial => "shared/error_messages", :locals => {:target => @firm } if @firm.errors.any? %>
 <div class="grid_5 alpha">
   <div class="field">  
-    <%= f.label :name %>
+    <%= f.label :name, "Название в договоре" %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
@@ -28,7 +28,7 @@
   </div>
   <div class="field">
     <%= f.label :phone %> <span class="input-helper">+7(495)</span>
-    <%= f.text_field :phone %>
+    <%= f.text_field :phone, :class=> "phone" %>
   </div> 
   <div class="field">
     <%= f.label :phone2 %> <span class="input-helper">+7(495)</span>

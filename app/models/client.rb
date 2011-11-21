@@ -6,8 +6,11 @@ class Client < Firm
   has_many :users, :foreign_key => :firm_id
   has_many :client_owners
   has_many :owners, :through => :client_owners, :source => :user
-  
-  scope :free, where(:state_id => [1,2])
+  validates :phone, :phone => {:allow_blank => true}
+  validates :phone2, :phone => {:allow_blank => true}
+  validates :phone3, :phone => {:allow_blank => true}
+  validates :state_id, :presence => true
+  scope :free, where(:state_id => [1,2,3])
   scope :my, lambda {|user_id| where("(state_id in (1,2,3)) or (state_id = 0 and exists (select null from client_owners co where co.client_id = firms.id and co.user_id  = #{user_id} and active = 1))")}
   after_save :reset_all
 
