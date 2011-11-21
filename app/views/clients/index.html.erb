@@ -23,6 +23,7 @@
     <th><%= sort_column :state_id, "Статус" %></th>
     <th>Менеджеры</th>
     <th><%= sort_column :created_at, "Создан" %></th>
+    <th><%= link_to "П", "#", :title => "Кол-во пользователей", :class => "info" %></th>
     <th></th>
   </tr>
 
@@ -36,6 +37,7 @@
     <td><%= firm.state %></td>
      <td><%= firm.active_owners.map{|x| x.user.fio}.join(', ') %></td>
     <td><%= I18n.l(firm.created_at, :format => :long) %></td>
+    <td><%= checked_box_image(firm.users.present?) %></td>
     <td><%= link_to image_tag('bin.png'), client_path(firm), confirm: 'Удалить, вы уверены?', method: :delete %></td>
   </tr>
 <% end %>
