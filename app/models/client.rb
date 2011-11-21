@@ -8,7 +8,7 @@ class Client < Firm
   has_many :owners, :through => :client_owners, :source => :user
   
   scope :free, where(:state_id => [1,2])
-  scope :my, lambda {|user_id| where("(state_id in (1,2)) or (state_id = 0 and exists (select null from client_owners co where co.client_id = firms.id and co.user_id  = #{user_id} and active = 1))")}
+  scope :my, lambda {|user_id| where("(state_id in (1,2,3)) or (state_id = 0 and exists (select null from client_owners co where co.client_id = firms.id and co.user_id  = #{user_id} and active = 1))")}
   after_save :reset_all
 
   def active_owners
