@@ -43,6 +43,14 @@ class Client < Firm
     self.client_owners.where({:user_id => user.id, :active => true}).update_all("active = 0")
   end
   
+  def phones
+    res = []
+    res << phone if phone.present?
+    res << phone2 if phone2.present?
+    res << phone3 if phone3.present?
+    res
+  end
+
   private  
   def reset_all
     self.active_owners.update_all("active=0") if state_id_changed? && state_id_was == 0

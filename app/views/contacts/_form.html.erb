@@ -28,9 +28,10 @@
     <%= f.label :person_name %>
     <%= f.text_field :person_name  %>
   </div>
-  <div class="field">
+  <div class="field default-select">
     <%= f.label :phone %>
-    <%= f.text_field :phone  %>
+    <%= f.text_field :phone, :id => "phone_field", :class=>"g-hidden" %>
+    <%= f.select :phone, options_for_select((@contact.client.phones + [@contact.phone]).uniq.compact + [["Другой...",-1]], @contact.phone), {}, {:id => "phone_select"}  %>
   </div>
 
   <div class="field">
