@@ -23,7 +23,7 @@ class ContactsController < ClientsController
   # GET /contacts/new
   # GET /contacts/new.json
   def new
-    @contact = Contact.new(:client => @firm)
+    @contact = Contact.new(:client => @firm, :next_date => 7.days.from_now.to_date)
 
     respond_to do |format|
       format.html # new.html.erb

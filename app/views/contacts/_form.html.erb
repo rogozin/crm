@@ -35,7 +35,7 @@
 
   <div class="field">
     <%= f.label :next_date %>
-    <%= f.datetime_select :next_date,    {:default => 7.days.from_now, :minute_step => 5} %>
+    <%= f.text_field :next_date, :class => "datepicker" %>
   </div>  
  </div>
 <div class="clear"></div>
