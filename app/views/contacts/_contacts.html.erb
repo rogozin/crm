@@ -33,7 +33,7 @@
     <% end -%>
     <td><%= contact.contact_type.name %></td>
     <td><%= content_tag(:p,  truncate(sanitize(contact.comment), :length => 200, :omission => "..."), :class => "smalltext") %></td>
-    <td><%= I18n.l(contact.next_date, :format => :long) %></td>    
+    <td><%= I18n.l(contact.next_date.to_date, :format => :long) %></td>    
     <td><%= link_to image_tag('bin.png'), client_contact_path(contact.client, contact), confirm: 'Удалить, вы уверены?', method: :delete %></td>
   </tr>
 <% end %>
