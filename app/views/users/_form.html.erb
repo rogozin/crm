@@ -1,0 +1,52 @@
+<%= form_for(@user, :html => {:class => "one_line_form"} ) do |f| %>
+ 
+  <%= render :partial => "shared/error_messages", :locals => {:target => @user } if @user.errors.any? %>
+  <div class="field default-select">
+    <%= f.label :firm_id, "ID клиента" %>
+    <%= f.text_field :firm_id %>
+  </div>
+  <div class="field default-select">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>  
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>  
+  
+  <div class="field">
+    <%= f.label :expire_date, "Срок действия" %>
+    <%= f.text_field :expire_date, :class => "datepicker" %>
+  </div>    
+    
+  <div class="field">
+   <%= f.label :birth_date, "Дата рождения" %>
+   <%= f.text_field :birth_date, :class => "datepicker" %>
+  </div>        
+
+  <div class ="field">
+    <%= f.label :active, "Активировать?" %>
+    <%= f.check_box :active %>
+  </div>
+  
+  <h3>Роли:</h3>
+  <% @hidden_roles.each do |hidden_role| -%>
+    <%= hidden_field_tag "user[role_object_ids][]", hidden_role.id if @user.role_object_ids.include?(hidden_role.id) %>
+  <% end -%>
+  <% @roles.each do |role| -%>
+      
+  <div class ="field">
+    <%= label_tag dom_id(role), role.name %>
+    <%= check_box_tag "user[role_object_ids][]", role.id, @user.role_object_ids.include?(role.id), :id => dom_id(role) %>
+  </div>  
+  <% end -%>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

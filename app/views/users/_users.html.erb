@@ -14,9 +14,9 @@
   <% @users.each do |person| -%>
     <tr>
       <td><%= checked_box_image(person.active?) %></td>
-      <td><%= person.username %></td>
+      <td><%= edit_user_link person %></td>
       <% unless @firm -%>
-        <td class="no-wrap"><%= link_to firm_name(person.firm), edit_client_path(person.firm) if person.firm %></td>        
+        <td class="no-wrap"><%= edit_firm_link person.firm if person.firm %></td>        
       <% end -%>
       <td><%= person.fio %>
       <p class="smalltext"><%= person.appoint %></p>

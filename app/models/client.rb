@@ -10,6 +10,7 @@ class Client < Firm
   validates :phone2, :phone => {:allow_blank => true}
   validates :phone3, :phone => {:allow_blank => true}
   validates :state_id, :presence => true
+  validates :url, :format => { :with => /\Ahttp:\/\/www\.((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, :allow_blank => true  }
   scope :free, where(:state_id => [1,2,3])
   scope :my, lambda {|user_id| where("(state_id in (1,2,3)) or (state_id = 0 and exists (select null from client_owners co where co.client_id = firms.id and co.user_id  = #{user_id} and active = 1))")}
   after_save :reset_all

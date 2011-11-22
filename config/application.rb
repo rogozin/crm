@@ -57,3 +57,5 @@ module Crm
     end
   end
 end
+
+Date::DATE_FORMATS[:default] = '%d.%m.%Y'

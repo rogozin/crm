@@ -7,12 +7,14 @@
 //= require adapt/config
 //= require adapt/adapt
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require tinymce-jquery
 //= require_tree .
 
 
   $(function() {
+    $('input.datepicker').datepicker($.datepicker.regional['ru']);
     $('.tinymce textarea').tinymce({
       theme: 'advanced',
       theme_advanced_toolbar_location : "top",
