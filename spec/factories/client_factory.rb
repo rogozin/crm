@@ -3,6 +3,10 @@ Factory.sequence :client_seq do |n|
    "ООО Рога и копыта, клон #{n}"
   end
 
+Factory.sequence :phone_seq do |n|
+   "+7(495)123-#{n}"
+  end  
+
 Factory.define :client do |f|
   f.name {Factory.next(:client_seq)}
   f.email "firm@example.com"
@@ -10,6 +14,7 @@ Factory.define :client do |f|
   f.addr_f "Москва, ул. Льва Толстого д.12 стр. 1"
   f.addr_u "Москва, хата с краю"
   f.city "Москва"
+  f.phone {Factory.next(:phone_seq)}
   f.subway "Текстильщики"
   f.show_on_site true
   f.state_id 1

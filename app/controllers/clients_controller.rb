@@ -78,6 +78,7 @@ class ClientsController < BaseController
     @firm = Client.find(params[:id])
     return redirect_to clients_path, :alert => "Не могу удалить. На этом клиенте висят персоны" if @firm.persons.present?
     return redirect_to clients_path, :alert => "Не могу удалить. На этом клиенте висят контакты" if @firm.contacts.present?
+    return redirect_to clients_path, :alert => "Не могу удалить. На этом клиенте висят пользователи" if @firm.users.present?
     @firm.destroy
 
     respond_to do |format|
@@ -100,7 +101,7 @@ class ClientsController < BaseController
   end
   
   def select_form_data
-    @states= Client.states.to_a[0..2]
+    @states= Client.states.to_a[0..3]
     @states.delete_at(0) if @firm && @firm.free?
   end
   
