@@ -1,0 +1,70 @@
+<% page_title @firm ? @firm.short_name : "Неизвестный клиент", true, "Редактирование учетной записи" -%>
+<%= render :partial => 'shared/sub_menu_firm' if @firm %>
+
+<div class="grid_6 alpha">
+<%= render :partial => 'form' %>
+</div>
+<div class="grid_6 omega">
+<h3>Дополнительная информация</h3>
+<table class="no-border">
+<tr>
+  <td>ФИО</td>
+  <td><%= @user.fio %></td>
+</tr>
+<tr>
+  <td>Должность</td>
+  <td><%= @user.appoint %></td>
+</tr>
+<tr>
+  <td>Телефон</td>
+  <td><%= @user.phone %></td>
+</tr>
+<tr>
+  <td>Моб. телефон</td>
+  <td><%= @user.cellphone %></td>
+</tr>
+<tr>
+  <td>Skype</td>
+  <td><%= @user.skype %></td>
+</tr>
+<tr>
+  <td>ICQ</td>
+  <td><%= @user.icq %></td>
+</tr>
+<tr>
+  <td>Предыдущий вход</td>
+  <td><%= l(@user.last_login_at,:format => :long) if @user.last_login_at %></td>
+</tr>
+<tr>
+  <td>Предыдущий IP</td>
+  <td><%= @user.last_login_ip %></td>  
+</tr>
+<tr>
+  <td>Последний вход</td>
+  <td><%= l(@user.current_login_at,:format => :long)  if @user.current_login_at %></td>
+</tr>
+<tr>
+  <td>Последний IP</td>
+  <td><%= @user.current_login_ip %></td>  
+</tr>
+<tr>
+  <td>Всего входов</td>
+  <td><%= @user.login_count %></td>  
+</tr>
+<tr>
+  <td>Последняя активность</td>
+  <td><%= l(@user.last_request_at,:format => :long) if @user.last_request_at %></td>
+</tr>
+<tr>
+  <td>Учетная запись создана</td>
+  <td><%= l(@user.created_at, :format => :long)  %></td>
+</tr>
+<tr>
+  <td>Учетная запись изменена</td>
+  <td><%= l(@user.updated_at, :format => :long)  if @user.updated_at %></td>
+</tr>
+</table>
+</div>
+
+<div class="clear"></div>
+<%= render :partial => 'navigation' if @firm %>
