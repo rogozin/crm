@@ -18,7 +18,7 @@
 
 <% @contacts.each do |contact| %>
   <tr>
-    <td><%= link_to image_tag('edit.png'), edit_client_contact_path(contact.client, contact) %></td>
+    <td><%= link_to image_tag('edit.png'), edit_client_contact_path(contact.client, contact) if contact.client && current_user.is_first_manager? %></td>
     <%= content_tag :td , :class => event_status_class_name(contact.event.status) do %>    
        <% concat I18n.l(contact.current_date, :format => :long) %>
        <% concat content_tag(:p, contact.event.name, :class => "smalltext") %>
@@ -34,7 +34,7 @@
     <td><%= contact.contact_type.name %></td>
     <td><%= content_tag(:p,  truncate(sanitize(contact.comment), :length => 200, :omission => "..."), :class => "smalltext") %></td>
     <td><%= I18n.l(contact.next_date.to_date, :format => :long) %></td>    
-    <td><%= link_to image_tag('bin.png'), client_contact_path(contact.client, contact), confirm: 'Удалить, вы уверены?', method: :delete %></td>
+    <td><%= link_to image_tag('bin.png'), client_contact_path(contact.client, contact), confirm: 'Удалить, вы уверены?', method: :delete if contact.client && current_user.is_first_manager? %></td>
   </tr>
 <% end %>
 </table>

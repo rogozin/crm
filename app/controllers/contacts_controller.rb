@@ -3,6 +3,10 @@ class ContactsController < ClientsController
   before_filter :find_client
   before_filter :get_data, :only => [:create, :update, :new, :edit]
   before_filter :default_sort, :only => [:index, :my_contacts]
+  access_control do
+    allow "Администратор", "Главный менеджер"
+    allow "Менеджер продаж", :except => [:destroy, :edit, :update]
+  end  
   # GET /contacts
   # GET /contacts.json
   
