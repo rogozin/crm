@@ -19,8 +19,14 @@ class ContactsController < ClientsController
   end
   
   def my_contacts
+    params[:date_from] ||= Date.today
+    params[:date_to] ||= Date.tomorrow
     @contacts = Contact.scoped
     @contacts = @contacts.joins(", (select  firm_id, max(id) id from contacts group by firm_id order by firm_id) cc").where("cc.id = contacts.id")
+    @contacts = @contacts.where("`current_date` >= :date_from", {:date_from => params[:date_from].to_time(:local)}) if params[:date_from].present?
+    @contacts = @contacts.where("`current_date` < :date_to", {:date_to => params[:date_to].to_time(:local)}) if params[:date_to].present?
+    @contacts = @contacts.where("`next_date` >= :date_from", {:date_from => params[:next_date_from].to_time(:local)}) if params[:next_date_from].present?
+    @contacts = @contacts.where("`next_date` < :date_to", {:date_to => params[:next_date_to].to_time(:local)}) if params[:next_date_to].present?    
     @contacts = @contacts.where(:created_by => current_user.id) unless current_user.is_first_manager?
     @contacts = @contacts.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])    
   end

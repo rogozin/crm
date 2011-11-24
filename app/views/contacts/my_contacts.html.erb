@@ -1,5 +1,18 @@
 <% page_title("Список контактов", true ) -%>
 
+<div id="filter">
+<%= form_tag my_contacts_path, :method => :get do %>
+<fieldset>
+<legend>Фильтр</legend>
+<%= label_tag :date_from, "Дата контакта с" %>: <%= text_field_tag :date_from, params[:date_from], :class => "datepicker" %>
+<%= label_tag :date_to, "по" %>: <%= text_field_tag :date_to, params[:date_to], :class => "datepicker" %>
+<%= label_tag :next_date_from, "Следующий контакт с" %>: <%= text_field_tag :next_date_from, params[:next_date_from], :class => "datepicker" %>
+<%= label_tag :next_date_to, "по" %>: <%= text_field_tag :next_date_to, params[:next_date_to], :class => "datepicker" %>
+<%= submit_tag "Найти" , :name => nil%>
+</fieldset>
+<% end -%>
+</div>
+<div class="spacer"></div>
 <div id="contacts" class="table_data">
 
 <%= render :partial => "contacts" %>

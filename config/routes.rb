@@ -2,7 +2,7 @@ Crm::Application.routes.draw do
   
 
   match "/directories" => "directories#index", :as => :directories
-  match "/contacts" => "contacts#my_contacts"
+  match "/contacts" => "contacts#my_contacts", :as => :my_contacts
   match "/stats" => "users#stats"
   
 
