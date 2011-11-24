@@ -20,6 +20,7 @@ class ContactsController < ClientsController
   
   def my_contacts
     @contacts = Contact.scoped
+    @contacts = @contacts.joins(", (select  firm_id, max(id) id from contacts group by firm_id order by firm_id) cc").where("cc.id = contacts.id")
     @contacts = @contacts.where(:created_by => current_user.id) unless current_user.is_first_manager?
     @contacts = @contacts.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])    
   end

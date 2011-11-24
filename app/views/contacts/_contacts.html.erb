@@ -31,7 +31,7 @@
     <td><%= link_to_if contact.person.present?, person_name(contact), edit_client_person_path(contact.client, contact.person.present? ? contact.person : 0) if contact.person %></td>
     <td><%= contact.phone %></td>      
     <% end -%>
-    <td><%= contact.contact_type.name %></td>
+    <td><%= contact.contact_type.name %> <%= content_tag :p, user_name(contact.author), :class => "smalltext" %> </td>
     <td><%= content_tag(:p,  sanitize(contact.comment), :class => "smalltext") %></td>
     <td><%= I18n.l(contact.next_date.to_date, :format => :long) %></td>    
     <td><%= link_to image_tag('bin.png'), client_contact_path(contact.client, contact), confirm: 'Удалить, вы уверены?', method: :delete if contact.client && current_user.is_first_manager? %></td>

@@ -1,3 +1,4 @@
+#encoding: utf-8;
 require 'spec_helper'
 
 describe ContactsController do
@@ -13,11 +14,21 @@ end
 
 
   describe "GET index" do
-    it "assigns all contacts as @contacts" do
+    it "все контакты у клиента" do
       contact = Factory(:contact, :firm_id => @firm.id)
+      contact2 = Factory(:contact, :firm_id => @firm.id)
       get :index, :client_id => @firm.id
-      assigns(:contacts).should eq([contact])
+      assigns(:contacts).should eq([contact, contact2])
     end
+    
+    it "мои контакты (вижу только последние контакты)" do
+      contact = Factory(:contact, :firm_id => @firm.id)
+      contact2 = Factory(:contact, :firm_id => @firm.id)
+      get :my_contacts
+      assigns(:contacts).should eq([contact2])
+    end
+
+    
   end
 
   describe "GET new" do
