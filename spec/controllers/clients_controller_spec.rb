@@ -8,10 +8,10 @@ describe ClientsController do
 
   describe "GET index" do
     before(:each) do
-      @firm1 = Factory.create(:client, :state_id => 0)
+      @firm1 = Factory.create(:client, :state_id => 0, :phone2 => "+7(499)199-5388")
       @firm1.client_owners.create(:active => true, :user_id => 999)      
-      @firm2 = Factory.create(:client, :state_id => 1)      
-      @firm3 = Factory.create(:client, :state_id => 2)
+      @firm2 = Factory.create(:client, :state_id => 1, :url=> "http://www.my-firm2.ru")      
+      @firm3 = Factory.create(:client, :state_id => 2, :email => "info@firm3.com")
     end
     
     it "Главный манагер видит всех клиентов" do      
@@ -27,6 +27,19 @@ describe ClientsController do
       get :index
       assigns(:firms).should eq([@firm1, @firm2, @firm3, @firm4])      
     end
+    
+    it 'Фильтр работает' do
+      direct_login_as :first_manager
+      get :index, :id => @firm1.id
+      assigns(:firms).should have(1).record
+      get :index, :phone => "199-5388"
+      assigns(:firms).should have(1).record
+      get :index, :site => "my-firm2.ru"
+      assigns(:firms).should have(1).record
+      get :index, :email => "firm3.com"      
+      assigns(:firms).should have(1).record
+    end
+    
   end
 
   describe "GET new" do

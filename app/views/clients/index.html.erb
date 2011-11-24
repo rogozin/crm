@@ -2,8 +2,15 @@
 
 <div id="filter">
 <%= form_tag clients_path, :method => :get do %>
-Поиск по названию(полному или краткому): <%= text_field_tag :name, params[:name] %>
+<fieldset>
+<legend>Фильтр</legend>
+<%= label_tag :id, "ID" %>: <%= text_field_tag :id, params[:id] %>
+<%= label_tag :name, "Название" %>: <%= text_field_tag :name, params[:name] %>
+<%= label_tag :phone, "Телефон" %>: <%= text_field_tag :phone, params[:phone] %>
+<%= label_tag :site, "Сайт" %>: <%= text_field_tag :site, params[:site] %>
+<%= label_tag :email, "Email" %>: <%= text_field_tag :email, params[:email] %>
 <%= submit_tag "Найти" , :name => nil%>
+</fieldset>
 <% end -%>
 </div>
 

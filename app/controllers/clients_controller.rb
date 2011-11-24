@@ -16,7 +16,11 @@ class ClientsController < BaseController
     params[:sort]||="name" 
     params[:direction]||="asc"
     @firms = Client.scoped
+    @firms = @firms.where(:id => params[:id]) if params[:id].present?
     @firms = @firms.where("short_name like :request or name like :request", {:request => "%#{params[:name]}%"}) if params[:name].present?
+    @firms = @firms.where("(phone like :request) or (phone2 like :request) or (phone3 like :request)", {:request => "%#{params[:phone]}%"}) if params[:phone].present?
+    @firms = @firms.where("url like :request", {:request => "%#{params[:site]}%"}) if params[:site].present?
+    @firms = @firms.where("email like :request", {:request => "%#{params[:email]}%"}) if params[:email].present?
     @firms = @firms.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
     
     respond_to do |format|
