@@ -1,7 +1,8 @@
 #encoding: utf-8;
 class ClientsController < BaseController
   before_filter :find_firm, :only => [:new, :edit, :update, :create, :destroy]
-  before_filter :select_form_data, :only => [:new, :edit, :update, :create]
+  before_filter :select_form_data, :only => [:index, :new, :edit, :update, :create]
+  before_filter :select_owners, :only => [:index]
   access_control do
     allow "Администратор", "Главный менеджер"
     allow "Менеджер продаж", :except => [:destroy]
@@ -17,6 +18,8 @@ class ClientsController < BaseController
     params[:direction]||="asc"
     @firms = Client.scoped
     @firms = @firms.where(:id => params[:id]) if params[:id].present?
+    @firms = @firms.where(:state_id => params[:state_id]) if params[:state_id].present? && params[:state_id].to_i >= 0
+    @firms = @firms.joins(:client_owners).where("client_owners.active=1").where("client_owners.user_id" => params[:owners]) if params[:owners].present?
     @firms = @firms.where("short_name like :request or name like :request", {:request => "%#{params[:name]}%"}) if params[:name].present?
     @firms = @firms.where("(phone like :request) or (phone2 like :request) or (phone3 like :request)", {:request => "%#{params[:phone]}%"}) if params[:phone].present?
     @firms = @firms.where("url like :request", {:request => "%#{params[:site]}%"}) if params[:site].present?
@@ -107,6 +110,11 @@ class ClientsController < BaseController
   def select_form_data
     @states= Client.states.to_a[0..3]
     @states.delete_at(0) if @firm && @firm.free?
+  end
+  
+  def select_owners
+    user_ids =  ClientOwner.select("distinct user_id").where(:active => true).map(&:user_id)
+    @owners = User.where(:id => user_ids)
   end
   
 end

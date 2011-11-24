@@ -274,12 +274,12 @@ div {
         font-size:8pt;
         vertical-align:super;
       }
+    } 
      input, textarea, select { border: 1px solid $base_color; } 
      input[type="text"], input[type="password"], textarea, &.default-select select {
         width:220px;
      } 
      textarea {height:40px;}
-    } 
   &.b-command-menu {
       font-size:1.1em;
       padding:5px 0;

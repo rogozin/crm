@@ -38,7 +38,12 @@ describe ClientsController do
       assigns(:firms).should have(1).record
       get :index, :email => "firm3.com"      
       assigns(:firms).should have(1).record
+      get :index, :state_id => "2"      
+      assigns(:firms).should have(1).record      
+      get :index, {"owners" => "999"}
+      assigns(:firms).should have(1).record            
     end
+    
     
   end
 
