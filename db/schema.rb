@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111116180834) do
+ActiveRecord::Schema.define(:version => 20111125072629) do
 
   create_table "attach_images", :id => false, :force => true do |t|
     t.integer "attachable_id"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20111116180834) do
     t.integer  "go_cnt"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position",   :default => 0
+    t.integer  "position",   :default => 1
     t.integer  "site",       :default => 0
     t.text     "pages"
   end
@@ -322,23 +322,7 @@ ActiveRecord::Schema.define(:version => 20111116180834) do
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "people", :force => true do |t|
-    t.integer  "firm_id",    :null => false
-    t.integer  "user_id"
-    t.string   "fio"
-    t.string   "appoint"
-    t.string   "phone"
-    t.string   "phone2"
-    t.string   "phone3"
-    t.string   "email"
-    t.string   "email2"
-    t.text     "comment"
-    t.integer  "created_by"
-    t.integer  "updated_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "site",                 :default => 0
   end
 
   create_table "persons", :force => true do |t|
@@ -479,10 +463,11 @@ ActiveRecord::Schema.define(:version => 20111116180834) do
     t.integer  "count",      :default => 0
     t.datetime "updated_at"
     t.integer  "option",     :default => 1
+    t.datetime "created_at"
   end
 
   add_index "store_units", ["product_id"], :name => "index_store_units_on_product_id"
-  add_index "store_units", ["store_id", "product_id"], :name => "index_store_units_on_store_id_and_product_id", :unique => true
+  add_index "store_units", ["store_id", "product_id", "option"], :name => "index_store_units_on_store_id_and_product_id_and_option", :unique => true
   add_index "store_units", ["store_id"], :name => "index_store_units_on_store_id"
 
   create_table "stores", :force => true do |t|
@@ -537,5 +522,9 @@ ActiveRecord::Schema.define(:version => 20111116180834) do
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "xml_data", :force => true do |t|
+    t.string "original_name", :null => false
+  end
 
 end
