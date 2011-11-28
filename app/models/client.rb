@@ -1,16 +1,17 @@
 #encoding: utf-8;
-class Client < Firm
+class Client < ActiveRecord::Base
   acts_as_authorization_object
-  has_many :contacts, :foreign_key => :firm_id, :dependent => :restrict
-  has_many :persons, :foreign_key => :firm_id, :dependent => :restrict
+  has_many :contacts, :dependent => :restrict
+  has_many :persons, :dependent => :restrict
   has_many :users, :foreign_key => :firm_id
   has_many :client_owners, :dependent => :delete_all
   has_many :owners, :through => :client_owners, :source => :user
-  validates :phone, :phone => {:allow_blank => true}
-  validates :phone2, :phone => {:allow_blank => true}
-  validates :phone3, :phone => {:allow_blank => true}
+  has_many :communications, :as => :ownerable
+#  validates :phone, :phone => {:allow_blank => true}
+#  validates :phone2, :phone => {:allow_blank => true}
+#  validates :phone3, :phone => {:allow_blank => true}
   validates :state_id, :presence => true
-  validates :url, :format => { :with => /\Ahttp:\/\/www\.((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, :allow_blank => true  }
+#  validates :url, :format => { :with => /\Ahttp:\/\/www\.((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, :allow_blank => true  }
   scope :free, where(:state_id => [1,2,3])
   scope :my, lambda {|user_id| where("(state_id in (1,2,3)) or (state_id = 0 and exists (select null from client_owners co where co.client_id = firms.id and co.user_id  = #{user_id} and active = 1))")}
   after_save :reset_all
@@ -45,11 +46,11 @@ class Client < Firm
   end
   
   def phones
-    res = []
-    res << phone if phone.present?
-    res << phone2 if phone2.present?
-    res << phone3 if phone3.present?
-    res
+#    res = []
+#    res << phone if phone.present?
+#    res << phone2 if phone2.present?
+#    res << phone3 if phone3.present?
+#    res
   end
 
   private  

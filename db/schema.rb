@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111125072629) do
+ActiveRecord::Schema.define(:version => 20111128180715) do
 
   create_table "attach_images", :id => false, :force => true do |t|
     t.integer "attachable_id"
@@ -73,7 +73,20 @@ ActiveRecord::Schema.define(:version => 20111125072629) do
   create_table "client_owners", :force => true do |t|
     t.integer  "client_id"
     t.integer  "user_id"
-    t.boolean  "active",     :default => true
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clients", :force => true do |t|
+    t.string   "name"
+    t.string   "short_name"
+    t.text     "addr_u"
+    t.text     "addr_f"
+    t.text     "comment"
+    t.string   "city"
+    t.string   "subway"
+    t.integer  "state_id",   :default => 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -95,12 +108,21 @@ ActiveRecord::Schema.define(:version => 20111125072629) do
     t.integer  "lk_firm_id"
   end
 
+  create_table "communications", :force => true do |t|
+    t.integer  "ownerable_id"
+    t.string   "ownerable_type"
+    t.string   "value"
+    t.integer  "type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contact_types", :force => true do |t|
     t.string "name", :null => false
   end
 
   create_table "contacts", :force => true do |t|
-    t.integer  "firm_id",         :null => false
+    t.integer  "client_id",       :null => false
     t.datetime "current_date",    :null => false
     t.integer  "contact_type_id", :null => false
     t.integer  "event_id",        :null => false
@@ -322,11 +344,10 @@ ActiveRecord::Schema.define(:version => 20111125072629) do
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "site",                 :default => 0
   end
 
   create_table "persons", :force => true do |t|
-    t.integer  "firm_id",    :null => false
+    t.integer  "client_id",  :null => false
     t.integer  "user_id"
     t.string   "fio"
     t.string   "appoint"
@@ -463,11 +484,10 @@ ActiveRecord::Schema.define(:version => 20111125072629) do
     t.integer  "count",      :default => 0
     t.datetime "updated_at"
     t.integer  "option",     :default => 1
-    t.datetime "created_at"
   end
 
   add_index "store_units", ["product_id"], :name => "index_store_units_on_product_id"
-  add_index "store_units", ["store_id", "product_id", "option"], :name => "index_store_units_on_store_id_and_product_id_and_option", :unique => true
+  add_index "store_units", ["store_id", "product_id"], :name => "index_store_units_on_store_id_and_product_id", :unique => true
   add_index "store_units", ["store_id"], :name => "index_store_units_on_store_id"
 
   create_table "stores", :force => true do |t|
@@ -522,9 +542,5 @@ ActiveRecord::Schema.define(:version => 20111125072629) do
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
   add_index "users", ["username"], :name => "index_users_on_username"
-
-  create_table "xml_data", :force => true do |t|
-    t.string "original_name", :null => false
-  end
 
 end
