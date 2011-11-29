@@ -36,7 +36,7 @@ class ClientsController < BaseController
   # GET /firms/new.json
   def new
     @firm = Client.new
-
+    build_communications
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @firm }
@@ -45,7 +45,7 @@ class ClientsController < BaseController
 
   # GET /firms/1/edit
   def edit
-#    @firm = Client.find(params[:id])
+    build_communications
   end
 
   # POST /firms
@@ -59,7 +59,10 @@ class ClientsController < BaseController
         format.html { redirect_to edit_client_path(@firm), :notice =>  "Новый #{ Client.model_name.human } успешно создан." }
         format.json { render json: @firm, status: :created, location: @firm }
       else
-        format.html { render action: "new" }
+        format.html do
+           build_communications
+           render action: "new" 
+         end
         format.json { render json: @firm.errors, status: :unprocessable_entity }
       end
     end
@@ -68,12 +71,18 @@ class ClientsController < BaseController
   # PUT /firms/1
   # PUT /firms/1.json
   def update
+    merge_attributes(params[:client][:phones_attributes])
+    merge_attributes(params[:client][:emails_attributes])
+    merge_attributes(params[:client][:sites_attributes])
     respond_to do |format|            
-      if @firm.update_attributes(params[:client])
+      if @firm.valid? @firm.update_attributes(params[:client])
         format.html { redirect_to edit_client_path(@firm), :notice =>  "#{ Client.model_name.human } успешно изменен."}
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html do
+          build_communications
+          render action: "edit" 
+        end
         format.json { render json: @firm.errors, status: :unprocessable_entity }
       end
     end
@@ -115,6 +124,18 @@ class ClientsController < BaseController
   def select_owners
     user_ids =  ClientOwner.select("distinct user_id").where(:active => true).map(&:user_id)
     @owners = User.where(:id => user_ids)
+  end
+  
+private
+  
+    def merge_attributes(params)
+      params.each_value{|x| x.merge!("_destroy" => "1") if x["value"].blank? && x["id"].present?} if params.present?
+    end
+  
+  def build_communications
+    @firm.phones.build if @firm.phones.empty?   
+    @firm.emails.build if @firm.emails.empty?
+    @firm.sites.build if @firm.sites.empty?
   end
   
 end

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.2'
+gem 'rails', '3.1.3'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -25,7 +25,7 @@ gem 'gift-auth', :path => "../gift/auth"
 gem 'gift-core', :path => "../gift/core"
 
 gem 'jquery-rails'
-gem 'composite_primary_keys'
+gem 'composite_primary_keys', :git => "https://github.com/drnic/composite_primary_keys.git"
 gem 'therubyracer'
 
 group :development, :test do

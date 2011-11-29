@@ -1,20 +1,23 @@
 #encoding: utf-8;
 class Client < ActiveRecord::Base
   acts_as_authorization_object
+  validates :name, :presence => true, :uniqueness => true
   has_many :contacts, :dependent => :restrict
   has_many :persons, :dependent => :restrict
   has_many :users, :foreign_key => :firm_id
   has_many :client_owners, :dependent => :delete_all
   has_many :owners, :through => :client_owners, :source => :user
   has_many :communications, :as => :ownerable
-#  validates :phone, :phone => {:allow_blank => true}
-#  validates :phone2, :phone => {:allow_blank => true}
-#  validates :phone3, :phone => {:allow_blank => true}
+  has_many :phones, :as => :ownerable, :class_name => "Communication", :conditions => {:type_id => 0}
+  has_many :emails, :as => :ownerable, :class_name => "Communication", :conditions => {:type_id => 1}
+  has_many :sites, :as => :ownerable, :class_name => "Communication", :conditions => {:type_id => 2}
   validates :state_id, :presence => true
-#  validates :url, :format => { :with => /\Ahttp:\/\/www\.((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, :allow_blank => true  }
   scope :free, where(:state_id => [1,2,3])
   scope :my, lambda {|user_id| where("(state_id in (1,2,3)) or (state_id = 0 and exists (select null from client_owners co where co.client_id = firms.id and co.user_id  = #{user_id} and active = 1))")}
   after_save :reset_all
+
+   accepts_nested_attributes_for :phones,  :allow_destroy => true
+   accepts_nested_attributes_for :emails, :sites, :reject_if => proc {|attributes| attributes['value'].blank?}, :allow_destroy => true
 
   def active_owners
     client_owners.where(:active => true).order("created_at desc")
@@ -44,14 +47,7 @@ class Client < ActiveRecord::Base
   def reset_my!(user)
     self.client_owners.where({:user_id => user.id, :active => true}).update_all("active = 0")
   end
-  
-  def phones
-#    res = []
-#    res << phone if phone.present?
-#    res << phone2 if phone2.present?
-#    res << phone3 if phone3.present?
-#    res
-  end
+
 
   private  
   def reset_all

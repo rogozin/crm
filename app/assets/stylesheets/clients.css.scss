@@ -6,3 +6,15 @@ input#id {width:30px;}
 input#phone {width:100px;}
 input#name, input#site, input#email {width:130px}
 }
+
+
+.add-new-item  {
+  float:right;
+  margin-top:-10px;
+  margin-bottom:10px;
+  a {
+    color:#C36;
+    text-decoration:none;
+    border-bottom:1px dotted;
+    }
+}    

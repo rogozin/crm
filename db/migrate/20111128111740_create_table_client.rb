@@ -5,10 +5,8 @@ class CreateTableClient < ActiveRecord::Migration
       t.string :short_name
       t.text :addr_u, :addr_f, :comment
       t.string :city, :subway
-#      t.string :phone, :phone2, :phone3
-#      t.string :email, :email2
-#      t.string :url, :url2
       t.integer :state_id, :default => 1
+      t.integer :firm_id
       t.timestamps
     end 
     
@@ -19,5 +17,7 @@ class CreateTableClient < ActiveRecord::Migration
 
   def down
     drop_table :clients
+    rename_column :contacts, :client_id, :firm_id
+    rename_column :persons, :client_id, :firm_id   
   end
 end

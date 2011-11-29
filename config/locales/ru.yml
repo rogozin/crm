@@ -5,7 +5,22 @@ ru:
       event: "Событие"
       contact_type: "Тип контакта"
       person: "Сотрудник"
+      client: "Клиент"            
     attributes:
+      client:
+        name: "Полное наименование"        
+        short_name: "Название"
+        city: "Город"
+        addr_u: "Юридич. адрес"
+        addr_f: "Физич. адрес"
+        subway: "Метро"
+        state_id: "Статус"  
+        phones:
+          value: "Телефон"
+        emails:
+          value: "Email"          
+        sites:
+          value: "Url"          
       event:
         name: "Название события"
         status: "Статус"
@@ -24,14 +39,11 @@ ru:
         fio: "Фамилия, Имя"
         appoint: "Должность"
         user_id: "Аккаунт"
-        phone: "Телефон"
-        phone2: "Телефон (2)"
-        phone3: "Телефон (3)"
-        email: "Email"
-        email2: "Email (2)"          
         coomment: "Комментарий"
-      client:
-        state_id: "Статус"  
+        phones:
+          value: "Телефон"
+        emails:
+          value: "Email"                  
   helpers:
    submit:
      create: 'Создать запись'

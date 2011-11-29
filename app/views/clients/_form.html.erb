@@ -26,30 +26,44 @@
     <%= f.label :subway %>
     <%= f.text_field :subway %>
   </div>
-  <div class="field">
-    <%= f.label :phone %> <span class="input-helper" title="формат: +7(495)345-6789">+7(495)</span>
-    <%= f.text_field :phone, :class=> "phone" %>
-  </div> 
-  <div class="field">
-    <%= f.label :phone2 %> <span class="input-helper" title="формат: +7(495)345-6789">+7(495)</span>
-    <%= f.text_field :phone2 %>
-  </div>   
-  <div class="field">
-    <%= f.label :phone3 %> <span class="input-helper" title="формат: +7(495)345-6789">+7(495)</span>
-    <%= f.text_field :phone3 %>
-  </div>   
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </div>            
-  <div class="field">
-    <%= f.label :email2 %>
-    <%= f.text_field :email2 %>
-  </div>              
-  <div class="field">
-    <%= f.label :url %> <span class="input-helper">http://www.</span>
-    <%= f.text_field :url %>
-  </div>   
+    
+   <%= f.fields_for :phones do |phones_fields| %>
+   <div class="field">
+   <%= phones_fields.label :value, "Телефон" %> <span class="input-helper" title="формат: +7(495)345-6789">+7(495)</span>
+   <%= phones_fields.text_field :value %>
+   </div>
+   <% end %>
+   
+   <div class="add-new-item">
+    <a href="" id="add_phone">Добавить телефон</a>
+   </div>
+   <div class="clear"></div>
+
+   <%= f.fields_for :emails do |emails_fields| %>
+   <div class="field">
+   <%= emails_fields.label :value, "Email" %>
+   <%= emails_fields.text_field :value %>
+   </div>
+   <% end %>
+   
+   <div class="add-new-item">
+    <a href="" id="add_email">Добавить Email</a>
+   </div>
+   <div class="clear"></div>
+
+
+   <%= f.fields_for :sites do |sites_fields| %>
+   <div class="field">
+   <%= sites_fields.label :value, "Url" %> <span class="input-helper">http://www.</span>
+   <%= sites_fields.text_field :value %>
+   </div>
+   <% end %>
+   
+   <div class="add-new-item">
+    <a href="" id="add_url">Добавить Url</a>
+   </div>
+   <div class="clear"></div>
+   
 <div class="field default-select">
     <%= f.label :state_id %>
     <%= f.select :state_id, options_for_select(@states, @firm.state_id),  { :include_blank => "<= Статус =>" } %>

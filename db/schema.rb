@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111128180715) do
+ActiveRecord::Schema.define(:version => 20111129052456) do
 
   create_table "attach_images", :id => false, :force => true do |t|
     t.integer "attachable_id"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(:version => 20111128180715) do
   create_table "client_owners", :force => true do |t|
     t.integer  "client_id"
     t.integer  "user_id"
-    t.boolean  "active"
+    t.boolean  "active",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20111128180715) do
     t.string   "city"
     t.string   "subway"
     t.integer  "state_id",   :default => 1
+    t.integer  "firm_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -112,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20111128180715) do
     t.integer  "ownerable_id"
     t.string   "ownerable_type"
     t.string   "value"
-    t.integer  "type_id"
+    t.integer  "type_id",        :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -542,5 +543,9 @@ ActiveRecord::Schema.define(:version => 20111128180715) do
 
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "xml_data", :force => true do |t|
+    t.string "original_name", :null => false
+  end
 
 end

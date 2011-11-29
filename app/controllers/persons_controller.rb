@@ -7,17 +7,19 @@ class PersonsController < ClientsController
   def index
     params[:page] ||= 1
     params[:per_page] ||= 30
-    @persons = Person.where(:firm_id => @firm.id).order("fio").paginate(:page => params[:page], :per_page => params[:per_page])
+    @persons = Person.where(:client_id => @firm.id).order("fio").paginate(:page => params[:page], :per_page => params[:per_page])
   end
   
   
   def new
     @person = Person.new(:client => @firm)
+    build_communications
   end
   
   
   def edit
     @person = Person.find(params[:id])
+    build_communications
   end
   
  def create
@@ -25,6 +27,7 @@ class PersonsController < ClientsController
     if @person.save
       redirect_to client_persons_path(@firm), :notice =>  "Новый #{ Person.model_name.human } успешно создан." 
     else
+      build_communications
       render action: "new" 
     end
   end
@@ -34,6 +37,7 @@ class PersonsController < ClientsController
     if @person.update_attributes(params[:person].merge(:updated_by => current_user.id))
       redirect_to client_persons_path(@firm), :notice => "#{ Person.model_name.human } успешно изменен."
     else
+      build_communications
       render action: "edit"
     end
   end
@@ -48,6 +52,11 @@ class PersonsController < ClientsController
   
   def firm_users
     @users = User.where(:firm_id => @firm.id).order("username")
+  end
+
+  def build_communications
+    @person.phones.build if @person.phones.empty?   
+    @person.emails.build if @person.emails.empty?
   end
 
 end

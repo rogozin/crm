@@ -11,7 +11,7 @@ class ContactsController < ClientsController
   # GET /contacts.json
   
   def index
-    @contacts = Contact.where(:firm_id => @firm.id).order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
+    @contacts = Contact.where(:client_id => @firm.id).order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @contacts }
@@ -22,7 +22,7 @@ class ContactsController < ClientsController
     params[:date_from] ||= Date.today
     params[:date_to] ||= Date.tomorrow
     @contacts = Contact.scoped
-    @contacts = @contacts.joins(", (select  firm_id, max(id) id from contacts group by firm_id order by firm_id) cc").where("cc.id = contacts.id")
+    @contacts = @contacts.joins(", (select  client_id, max(id) id from contacts group by client_id order by client_id) cc").where("cc.id = contacts.id")
     @contacts = @contacts.where("`current_date` >= :date_from", {:date_from => params[:date_from].to_time(:local)}) if params[:date_from].present?
     @contacts = @contacts.where("`current_date` < :date_to", {:date_to => params[:date_to].to_time(:local)}) if params[:date_to].present?
     @contacts = @contacts.where("`next_date` >= :date_from", {:date_from => params[:next_date_from].to_time(:local)}) if params[:next_date_from].present?

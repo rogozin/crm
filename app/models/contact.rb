@@ -6,4 +6,5 @@ class Contact < ActiveRecord::Base
   belongs_to :contact_type
   belongs_to :person
   belongs_to :author, :foreign_key => :created_by, :class_name => "User"
+  has_many :communications, :as => :ownerable  
 end
