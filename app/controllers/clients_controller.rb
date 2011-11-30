@@ -18,6 +18,7 @@ class ClientsController < BaseController
     params[:direction]||="asc"
     @firms = Client.scoped
     @firms = @firms.where(:id => params[:id]) if params[:id].present?
+    @firms = @firms.where(:firm_id => params[:firm_id]) if params[:firm_id].present?    
     @firms = @firms.where(:state_id => params[:state_id]) if params[:state_id].present? && params[:state_id].to_i >= 0
     @firms = @firms.joins(:client_owners).where("client_owners.active=1").where("client_owners.user_id" => params[:owners]) if params[:owners].present?
     @firms = @firms.where("short_name like :request or name like :request", {:request => "%#{params[:name]}%"}) if params[:name].present?

@@ -11,6 +11,7 @@
 <%= label_tag :email, "Email" %>: <%= text_field_tag :email, params[:email] %> 
 <%= label_tag :state_id, "Статус" %>: <%= select_tag :state_id, options_for_select([["Все",-1]] + @states , params[:state_id])  %>
 <%= submit_tag "Найти" , :name => nil%><br />
+<%= label_tag :firm_id, "FirmID" %>: <%= text_field_tag :firm_id, params[:firm_id] %> 
 <%= label_tag :owner, "Менеджер" %>:
 <% @owners.each do |owner| -%>
  <%= check_box_tag "owners[]", owner.id, params[:owners].present? && params[:owners].include?(owner.id.to_s), :id => dom_id(owner) %>

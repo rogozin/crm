@@ -2,6 +2,7 @@
 class Client < ActiveRecord::Base
   acts_as_authorization_object
   validates :name, :presence => true, :uniqueness => true
+  validates :firm_id,  :uniqueness => { :allow_blank => true}
   has_many :contacts, :dependent => :restrict
   has_many :persons, :dependent => :restrict
   has_many :users, :foreign_key => :firm_id

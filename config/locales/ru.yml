@@ -14,7 +14,8 @@ ru:
         addr_u: "Юридич. адрес"
         addr_f: "Физич. адрес"
         subway: "Метро"
-        state_id: "Статус"  
+        state_id: "Статус"
+        firm_id: "Связь с такой фирмой"
         phones:
           value: "Телефон"
         emails:

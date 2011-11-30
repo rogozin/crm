@@ -8,9 +8,9 @@ input#client_firm_id {
 }
 
 #filter {
-input#id {width:30px;}
-input#phone {width:100px;}
-input#name, input#site, input#email {width:130px}
+    #id, #firm_id {width:30px;}
+    #phone {width:100px;}
+    #name, #site, #email {width:130px}
 }
 
 
