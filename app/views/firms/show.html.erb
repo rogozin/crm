@@ -1,0 +1,67 @@
+<% page_title("Фирма #{@firm.name}") -%>
+<%= render :partial => 'shared/sub_menu_firm' %>
+
+<div id="firm">
+
+<table class="no-border">
+   <tr>
+     <td>ID</td>
+     <td><%= @firm.id %></td>
+   </tr>
+  <tr>
+    <td>Название</td>
+    <td><%= @firm.name %></td>
+  </tr>
+  <tr>
+    <td>Краткое название</td>
+    <td><%= @firm.short_name %></td>
+  </tr>
+  <tr>
+    <td>Город</td>
+    <td><%= @firm.city %></td>
+  </tr>
+  <tr>
+    <td>Метро</td>
+    <td><%= @firm.subway %></td>
+  </tr>  
+  <tr>
+    <td>Адрес Физ.</td>
+    <td><%= @firm.addr_f %></td>
+  </tr>  
+  <tr>
+    <td>Адрес Юр.</td>
+    <td><%= @firm.addr_u %></td>
+  </tr>      
+  <tr>
+    <td>Телефон</td>
+    <td><%= @firm.phone %></td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td><%= @firm.email %></td>
+  </tr>
+  <tr>
+    <td>URL</td>
+    <td><%= @firm.url %></td>
+  </tr>
+  <tr>
+    <td>Раздел где купить</td>
+    <td><%= @firm.show_on_site ? "Да" : "Нет" %></td>
+  </tr>
+  <tr>
+    <td>Описание</td>
+    <td><%= @firm.description %></td>
+  </tr>  
+  <tr>
+    <td>Создана</td>
+    <td><%= l(@firm.created_at, :format => :long) %></td>
+  </tr>
+  <tr>
+    <td>Изменена</td>
+    <td><%= l(@firm.updated_at, :format => :long) %></td>
+  </tr>
+</table>
+
+</div>
+
+

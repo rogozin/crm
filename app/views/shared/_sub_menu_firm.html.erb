@@ -1,10 +1,8 @@
 <%= content_for :sub_menu do %>
     <div id="sub_menu">
        <ul>
-        <%= tab :clients, :url => edit_client_path(@firm),  :label=>'Информация' %>
-        <%= tab :contacts, :url => client_contacts_path(@firm), :label=>'Контакты' %>
-        <%= tab :persons, :url => client_persons_path(@firm),  :label=>'Сотрудники' %>
-        <%= tab :users, :url => client_users_path(@firm),  :label=>'Пользователи' %>
+        <%= tab :firms, :url => firm_path(@firm), :pattern => /firms\/\d+$/,  :label=>'Фирма' %>
+        <%= tab :users, :url => firm_users_path(@firm), :pattern => /\/(firms\/\d+\/users|users\/\d+\/edit)$/, :label=>'Пользователи' %>
       </ul>
     </div>
     <div class="clear"></div>

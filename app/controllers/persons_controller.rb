@@ -25,7 +25,7 @@ class PersonsController < ClientsController
  def create
     @person = Person.new(params[:person].merge(:created_by => current_user.id))
     if @person.save
-      redirect_to client_persons_path(@firm), :notice =>  "Новый #{ Person.model_name.human } успешно создан." 
+      redirect_to edit_client_person_path(@firm, @person), :notice =>  "Новый #{ Person.model_name.human } успешно создан." 
     else
       build_communications
       render action: "new" 
@@ -35,7 +35,7 @@ class PersonsController < ClientsController
   def update
     @person = Person.find(params[:id])
     if @person.update_attributes(params[:person].merge(:updated_by => current_user.id))
-      redirect_to client_persons_path(@firm), :notice => "#{ Person.model_name.human } успешно изменен."
+      redirect_to edit_client_person_path(@firm, @person), :notice => "#{ Person.model_name.human } успешно изменен."
     else
       build_communications
       render action: "edit"

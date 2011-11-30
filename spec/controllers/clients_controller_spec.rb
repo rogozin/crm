@@ -8,10 +8,11 @@ describe ClientsController do
 
   describe "GET index" do
     before(:each) do
-      @firm1 = Factory.create(:client, :state_id => 0, :phone2 => "+7(499)199-5388")
+      @firm1 = Factory.create(:client, :state_id => 0)
+      @firm1.phones << Factory(:phone, :value => "+7(499)199-5388")
       @firm1.client_owners.create(:active => true, :user_id => 999)      
-      @firm2 = Factory.create(:client, :state_id => 1, :url=> "http://www.my-firm2.ru")      
-      @firm3 = Factory.create(:client, :state_id => 2, :email => "info@firm3.com")
+      @firm2 = Factory.create(:client, :state_id => 1, :sites=> [ Factory(:url, :value => "http://www.my-firm2.ru") ])
+      @firm3 = Factory.create(:client, :state_id => 2, :emails => [ Factory(:email, :value => "info@firm3.com") ])
     end
     
     it "Главный манагер видит всех клиентов" do      
@@ -28,23 +29,40 @@ describe ClientsController do
       assigns(:firms).should eq([@firm1, @firm2, @firm3, @firm4])      
     end
     
-    it 'Фильтр работает' do
-      direct_login_as :first_manager
-      get :index, :id => @firm1.id
-      assigns(:firms).should have(1).record
-      get :index, :phone => "199-5388"
-      assigns(:firms).should have(1).record
-      get :index, :site => "my-firm2.ru"
-      assigns(:firms).should have(1).record
-      get :index, :email => "firm3.com"      
-      assigns(:firms).should have(1).record
-      get :index, :state_id => "2"      
-      assigns(:firms).should have(1).record      
-      get :index, {"owners" => "999"}
-      assigns(:firms).should have(1).record            
+    context  'поиск' do
+      before(:each) do
+        direct_login_as :first_manager        
+      end
+  
+      it 'поиск по телефону' do
+        get :index, :phone => "199-5388"
+        assigns(:firms).should have(1).record        
+      end      
+      
+      it 'поиск по сайту' do
+        get :index, :site => "my-firm2.ru"
+        assigns(:firms).should have(1).record        
+      end
+      
+      it 'поиск по email' do
+        get :index, :email => "firm3.com"      
+        assigns(:firms).should have(1).record        
+      end
+      
+      it 'одновременный поиск по сайту и почте' do
+        get :index, :email => "firm3.com",  :site => "my-firm2.ru"
+        assigns(:firms).should have(2).record                
+      end
+      
+      it 'прочий поиск' do
+        get :index, :id => @firm1.id
+        assigns(:firms).should have(1).record
+        get :index, :state_id => "2"      
+        assigns(:firms).should have(1).record      
+        get :index, {"owners" => "999"}
+        assigns(:firms).should have(1).record            
+      end
     end
-    
-    
   end
 
   describe "GET new" do
@@ -107,13 +125,13 @@ describe ClientsController do
       it "creates a new Firm" do
         direct_login_as :second_manager
         expect {
-          post :create, :client => {:name => "Рога и копыта", :phone => "+7(495)234-3" }
-        }.to change(Client, :count).by(1)
+          post :create, :client => {:name => "Рога и копыта", :phones_attributes => { 0 => {:value =>  "+7(495)234-3"}} }
+        }.to change(Client, :count).by(1) && change(Communication, :count).by(1)
       end
 
       it "assigns a newly created firm as @firm" do
         direct_login_as :second_manager
-        post :create, :client => {:name => "Рога и копыта", :phone => "+7(495)234-4" }
+        post :create, :client => {:name => "Рога и копыта", :phones_attributes => { 0 => {:value =>  "+7(495)234-4"}} }
         assigns(:firm).should be_a(Client)
         assigns(:firm).should be_persisted
         assigns(:firm).state_id.should be_zero
@@ -139,9 +157,10 @@ describe ClientsController do
       it "assigns the requested firm as @firm" do
         direct_login_as :first_manager
         @firm = Factory(:client)
-        put :update, :id => @firm.id, :client => {:short_name => "Копыта и ко" , :phone => "+7(495)234-3"}
+        put :update, :id => @firm.id, :client => {:short_name => "Копыта и ко" , :phones_attributes => { 0 => {:id => @firm.phones.first.id, :value =>  "+7(495)234-6"}} }
         assigns(:firm).should eq(@firm)
         assigns(:firm).short_name.should eq "Копыта и ко"
+        assigns(:firm).phones.first.value.should eq "+7(495)234-6"
         response.should redirect_to(edit_client_path(@firm) )
       end
       
@@ -162,6 +181,7 @@ describe ClientsController do
         firm = Factory(:client)
         # Trigger the behavior that occurs when invalid params are submitted
         Client.any_instance.stub(:save).and_return(false)
+        Client.any_instance.stub(:valid?).and_return(false)
         put :update, :id => firm.id.to_s, :client => {}
         assigns(:firm).should eq(firm)
         response.should render_template("edit")        

@@ -51,7 +51,7 @@
     <td><%= firm.state %></td>
     <td><%= firm.active_owners.map{|x| x.user.fio}.join(', ') %></td>
     <td><%= I18n.l(firm.created_at, :format => :long) %></td>
-    <td><%= checked_box_image(firm.users.present?) %></td>
+    <td><%= checked_box_image(firm.firm && firm.firm.users.present?) %></td>
     <td><%= link_to image_tag('bin.png'), client_path(firm), confirm: 'Удалить, вы уверены?', method: :delete %></td>
   </tr>
 <% end %>

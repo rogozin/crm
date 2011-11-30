@@ -4,5 +4,6 @@
         <%= tab :contacts, :url => "/contacts", :label=>'Контакты' %>
         <%= tab :directories, :label=>'Справочники' if current_user.is_first_manager? %> 
         <%= tab :categories, :url => "/stats", :label=>'Статистика' %>        
+        <%= tab :firms, :label=>'Регистрации' %>        
       </ul>
     </nav>

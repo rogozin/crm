@@ -1,0 +1,30 @@
+<% page_title("Регистрации") -%>
+
+
+<div id="firms" class="table_data">
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Название</th>
+    <th>Город</th>
+    <th>Телефон</th>
+    <th>Создан</th>
+    <th><%= link_to "П", "#", :title => "Кол-во пользователей", :class => "info" %></th>
+  </tr>
+
+<% @firms.each do |firm| %>
+  <tr>
+    <td><%= firm.id %></td>
+    <td><%= link_to firm.name, firm_path(firm) %></td>
+    <td><%= firm.city %></td>
+    <td><%= firm.phone %></td>
+    <td><%= I18n.l(firm.created_at, :format => :long) %></td>
+    <td><%= checked_box_image(firm.users.present?) %></td>
+  </tr>
+<% end %>
+</table>
+
+</div>
+
+<%= will_paginate @firms %>

@@ -34,7 +34,9 @@ module ApplicationHelper
 
     css_classes = []
 
-    selected = if options[:match_path]
+    selected = if options[:pattern]
+      request.fullpath =~ options[:pattern]
+    elsif options[:match_path]
       request.fullpath.starts_with?(options[:match_path])
     elsif options[:url]
       request.fullpath.starts_with?(options[:url])

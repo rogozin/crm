@@ -2,7 +2,7 @@
  
   <%= render :partial => "shared/error_messages", :locals => {:target => @user } if @user.errors.any? %>
   <div class="field default-select">
-    <%= f.label :firm_id, "ID клиента" %>
+    <%= f.label :firm_id, "ID фирмы" %>
     <%= f.text_field :firm_id %>
   </div>
   <div class="field default-select">

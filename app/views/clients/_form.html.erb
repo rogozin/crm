@@ -54,8 +54,8 @@
 
    <%= f.fields_for :sites do |sites_fields| %>
    <div class="field">
-   <%= sites_fields.label :value, "Url" %> <span class="input-helper">http://www.</span>
-   <%= sites_fields.text_field :value %>
+   <%= sites_fields.label :value, "Url" %> <span class="input-helper">http://www.</span> <%= link_to "...", sites_fields.object.value, :target => "_blank", :title => "Открыть ссылку" %>
+   <%= sites_fields.text_field :value %> 
    </div>
    <% end %>
    
@@ -70,10 +70,15 @@
   </div>  
 </div>  
 <div class="grid_7 omega">
+<p class="label">
+Связан с фирмой: <%= f.text_field :firm_id %> <%= link_to @firm.firm.name, firm_path(@firm.firm) if @firm.firm %>
+</p>
+<div class="spacer"></div>
  <p class="label">Комментарий:</p>
     <div class="tinymce">
       <%= f.text_area :comment %>
    </div>
+   
 <div id="inline_persons" class="table-data">
   <%= yield :persons %>
 </div>

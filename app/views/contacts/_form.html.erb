@@ -2,7 +2,7 @@
   
   <div class="one_line_form">
   <%= render :partial => "shared/error_messages", :locals => {:target => @contact } if @contact.errors.any? %>
-   <%= f.hidden_field :firm_id %> 
+   <%= f.hidden_field :client_id %> 
   <div class="field">
   <label for="">Клиент</label>
    <strong><%= @firm.name %></strong>
@@ -10,7 +10,12 @@
 
   <div class="field">
     <%= f.label :current_date %>
+    <% if current_user.is_first_manager? -%>
     <%= f.datetime_select :current_date,  {:minute_step => 5} %>
+    <% else -%>      
+      <%= f.hidden_field :current_date %>
+      <%= l(Time.now, :format => :long) %>
+    <% end -%>
   </div>
   <div class="field default-select">
     <%= f.label :contact_type_id %>
@@ -30,8 +35,14 @@
   </div>
   <div class="field default-select">
     <%= f.label :phone %>
+    
+    <% if @contact.client.phones.present? -%>
     <%= f.text_field :phone, :id => "phone_field", :class=>"g-hidden" %>
-    <%= f.select :phone, options_for_select((@contact.client.phones + [@contact.phone]).uniq.compact + [["Другой...",-1]], @contact.phone), {}, {:id => "phone_select"}  %>
+    <%= f.select :phone, options_for_select((@contact.client.phones.map(&:value) + [@contact.phone]).uniq.compact + [["Другой...",-1]], @contact.phone), {}, {:id => "phone_select"}  %>
+    <% else -%>      
+    <%= f.text_field :phone, :id => "phone_field" %>    
+    <% end -%>
+    
   </div>
 
   <div class="field">

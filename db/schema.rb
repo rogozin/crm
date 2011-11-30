@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111129052456) do
+ActiveRecord::Schema.define(:version => 20111130090138) do
 
   create_table "attach_images", :id => false, :force => true do |t|
     t.integer "attachable_id"
@@ -219,11 +219,6 @@ ActiveRecord::Schema.define(:version => 20111129052456) do
     t.float    "long"
     t.string   "permalink"
     t.boolean  "show_on_site",                :default => false
-    t.text     "comment"
-    t.string   "phone2"
-    t.string   "phone3"
-    t.string   "email2"
-    t.integer  "state_id",                    :default => 1
   end
 
   add_index "firms", ["city"], :name => "index_firms_on_city"
@@ -345,6 +340,7 @@ ActiveRecord::Schema.define(:version => 20111129052456) do
     t.integer  "updated_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "site",                 :default => 0
   end
 
   create_table "persons", :force => true do |t|
@@ -352,11 +348,6 @@ ActiveRecord::Schema.define(:version => 20111129052456) do
     t.integer  "user_id"
     t.string   "fio"
     t.string   "appoint"
-    t.string   "phone"
-    t.string   "phone2"
-    t.string   "phone3"
-    t.string   "email"
-    t.string   "email2"
     t.text     "comment"
     t.integer  "created_by"
     t.integer  "updated_by"
@@ -485,10 +476,11 @@ ActiveRecord::Schema.define(:version => 20111129052456) do
     t.integer  "count",      :default => 0
     t.datetime "updated_at"
     t.integer  "option",     :default => 1
+    t.datetime "created_at"
   end
 
   add_index "store_units", ["product_id"], :name => "index_store_units_on_product_id"
-  add_index "store_units", ["store_id", "product_id"], :name => "index_store_units_on_store_id_and_product_id", :unique => true
+  add_index "store_units", ["store_id", "product_id", "option"], :name => "index_store_units_on_store_id_and_product_id_and_option", :unique => true
   add_index "store_units", ["store_id"], :name => "index_store_units_on_store_id"
 
   create_table "stores", :force => true do |t|

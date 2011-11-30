@@ -34,7 +34,7 @@ class ContactsController < ClientsController
   # GET /contacts/new
   # GET /contacts/new.json
   def new
-    @contact = Contact.new(:client => @firm, :next_date => 7.days.from_now.to_date)
+    @contact = Contact.new(:client => @firm, :current_date => Time.now, :next_date => 7.days.from_now.to_date)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -96,7 +96,7 @@ class ContactsController < ClientsController
   def get_data
     @events = Event.order("name")
     @contact_types = ContactType.order("name")
-    @persons = Person.where(:firm_id => @firm.id).order("fio")
+    @persons = Person.where(:client_id => @firm.id).order("fio")
   end
 
   def default_sort

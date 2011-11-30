@@ -8,7 +8,7 @@ describe PersonsController do
 
   describe "GET 'index'" do
     it "returns http success" do
-      get :index, :firm_id => @firm
+      get :index, :client_id => @firm
       response.should be_success
     end
   end

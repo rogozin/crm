@@ -1,4 +1,4 @@
-<% page_title @firm ? @firm.short_name : "Неизвестный клиент", true, "Редактирование учетной записи" -%>
+<% page_title (@firm ? @firm.name : "Неизвестный клиент"), true, "Редактирование учетной записи" -%>
 <%= render :partial => 'shared/sub_menu_firm' if @firm %>
 
 <div class="grid_6 alpha">

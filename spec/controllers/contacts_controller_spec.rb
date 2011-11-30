@@ -4,7 +4,7 @@ require 'spec_helper'
 describe ContactsController do
 
 def valid_attributes 
-   Factory.attributes_for(:contact, :firm_id => @firm.id)
+   Factory.attributes_for(:contact, :client_id => @firm.id)
 end
 
   before(:each) do
@@ -15,8 +15,8 @@ end
 
   describe "GET index" do
     it "все контакты у клиента" do
-      contact = Factory(:contact, :firm_id => @firm.id)
-      contact2 = Factory(:contact, :firm_id => @firm.id)
+      contact = Factory(:contact, :client_id => @firm.id)
+      contact2 = Factory(:contact, :client_id => @firm.id)
       get :index, :client_id => @firm.id
       assigns(:contacts).should eq([contact, contact2])
     end    
@@ -25,24 +25,24 @@ end
   
   describe 'GET my_contacts' do
     it "мои контакты (вижу только последние контакты) на сегодня" do
-      contact = Factory(:contact, :firm_id => @firm.id)
-      contact2 = Factory(:contact, :firm_id => @firm.id)
+      contact = Factory(:contact, :client_id => @firm.id)
+      contact2 = Factory(:contact, :client_id => @firm.id)
       get :my_contacts
       assigns(:contacts).should eq([contact2])
     end
 
     it 'фильтр по дате контакта' do
-      contact2 = Factory(:contact, :current_date => "01.10.2011", :firm_id => 999)      
-      contact = Factory(:contact, :current_date => "05.10.2011", :firm_id => @firm.id)
-      contact3 = Factory(:contact, :current_date => "12.10.2011", :firm_id => 998)
+      contact2 = Factory(:contact, :current_date => "01.10.2011", :client_id => 999)      
+      contact = Factory(:contact, :current_date => "05.10.2011", :client_id => @firm.id)
+      contact3 = Factory(:contact, :current_date => "12.10.2011", :client_id => 998)
       get :my_contacts, :date_from => "05.10.2011", :date_to => "12.10.2011"
       assigns(:contacts).should eq([contact])
     end
     
     it 'фильтр по дате следющего контакта ' do
-      contact = Factory(:contact, :next_date => "05.10.2011", :firm_id => @firm.id)
-      contact2 = Factory(:contact, :next_date => "01.10.2011", :firm_id => 999)
-      contact3 = Factory(:contact, :next_date => "12.10.2011", :firm_id => 998)            
+      contact = Factory(:contact, :next_date => "05.10.2011", :client_id => @firm.id)
+      contact2 = Factory(:contact, :next_date => "01.10.2011", :client_id => 999)
+      contact3 = Factory(:contact, :next_date => "12.10.2011", :client_id => 998)            
       get :my_contacts, :next_date_from => "05.10.2011",  :next_date_to => "12.10.2011"
       assigns(:contacts).should eq([contact])
     end
@@ -69,12 +69,12 @@ end
     describe "with valid params" do
       it "creates a new Contact" do
         expect {
-          post :create, :client_id => @firm.id, :contact => Factory.attributes_for(:contact, :firm_id => @firm.id)
+          post :create, :client_id => @firm.id, :contact => Factory.attributes_for(:contact, :client_id => @firm.id)
         }.to change(Contact, :count).by(1)
       end
 
       it "assigns a newly created contact as @contact" do
-        post :create, :client_id => @firm.id, :contact => Factory.attributes_for(:contact, :firm_id => @firm.id)
+        post :create, :client_id => @firm.id, :contact => Factory.attributes_for(:contact, :client_id => @firm.id)
         assigns(:contact).should be_a(Contact)
         assigns(:contact).should be_persisted
         assigns(:contact).created_by.should eq @user.id

@@ -1,11 +1,11 @@
 #encoding: utf-8;
-class UsersController < ClientsController   
-  before_filter :find_client, :only => [:index] 
+class UsersController < FirmsController   
   before_filter :load_roles, :only => [:edit, :update]
 
   def index
     params[:page] ||= 1
     params[:per_page] ||= 30
+    @firm = Firm.find(params[:firm_id])
     @users = @firm.users.order("username").paginate(:page => params[:page], :per_page => params[:per_page])
   end
   
@@ -16,7 +16,7 @@ class UsersController < ClientsController
   
   def edit
     @user = User.find(params[:id])
-    @firm = @user.client
+    @firm = @user.firm 
     return redirect_to :stats, :alert => "Недостаточно прав для просмотра страницы" if current_user.is_second_manager? && !(@firm.free? || @firm.my?(current_user))
   end
   
