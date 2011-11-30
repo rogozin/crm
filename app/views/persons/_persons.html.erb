@@ -13,8 +13,8 @@
       <td><%= person.user.username if person.user %></td>
       <td><%= person.fio %></td>
       <td><%= person.appoint %></td>
-      <td><%= person.phone %></td>
-      <td><%= person.email %></td>
+      <td><%= person.phones.map(&:value).join(', ') %></td>
+      <td><%= person.emails.map(&:value).join(', ') %></td>
       <td><%= I18n.l(person.created_at, :format => :long) %></td>
       <td><%= link_to image_tag('bin.png'), client_person_path(@firm, person), method: :delete, confirm: "Удалить? Вы уверены?" %></td>
     </tr>
