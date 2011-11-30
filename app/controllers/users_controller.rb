@@ -17,7 +17,7 @@ class UsersController < FirmsController
   def edit
     @user = User.find(params[:id])
     @firm = @user.firm 
-    return redirect_to :stats, :alert => "Недостаточно прав для просмотра страницы" if current_user.is_second_manager? && !(@firm.free? || @firm.my?(current_user))
+    return redirect_to :stats, :alert => "Недостаточно прав для просмотра страницы" if current_user.is_second_manager? && !(@firm.client.free? || @firm.client.my?(current_user))
   end
   
   def update
