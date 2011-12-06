@@ -1,16 +1,31 @@
 <% page_title("Регистрации") -%>
 
+<div id="filter">
+<%= form_tag firms_path, :method => :get do %>
+<fieldset>
+<legend>Фильтр</legend>
+<%= label_tag :id, "FirmID" %>: <%= text_field_tag :id, params[:id] %>
+<%= label_tag :name, "Название" %>: <%= text_field_tag :name, params[:name] %>
+<%= label_tag :phone, "Тел" %>: <%= text_field_tag :phone, params[:phone] %>
+<%= label_tag :site, "Сайт" %>: <%= text_field_tag :site, params[:site] %>
+<%= label_tag :email, "Email" %>: <%= text_field_tag :email, params[:email] %> 
+<%= submit_tag "Найти" , :name => nil%><br />
+</fieldset>
+<% end -%>
+</div>
+
 
 <div id="firms" class="table_data">
 
 <table>
   <tr>
-    <th>ID</th>
-    <th>Название</th>
-    <th>Город</th>
-    <th>Телефон</th>
-    <th>Создан</th>
+    <th><%= sort_column :id, "FirmID" %></th>
+    <th><%= sort_column :name, "Название" %></th>
+    <th><%= sort_column :city, "Город" %></th>
+    <th><%= sort_column :phone, "Телефон" %></th>
+    <th><%= sort_column :created_at, "Создан" %></th>
     <th><%= link_to "П", "#", :title => "Кол-во пользователей", :class => "info" %></th>
+    <th>Клиент</th>
   </tr>
 
 <% @firms.each do |firm| %>
@@ -19,8 +34,9 @@
     <td><%= link_to firm.name, firm_path(firm) %></td>
     <td><%= firm.city %></td>
     <td><%= firm.phone %></td>
-    <td><%= I18n.l(firm.created_at, :format => :long) %></td>
+    <td><%= I18n.l(firm.created_at, :format => :long) %></td>    
     <td><%= checked_box_image(firm.users.present?) %></td>
+    <td><%= edit_client_link(firm.client, firm.client.id, firm.client.name) if firm.client %></td>
   </tr>
 <% end %>
 </table>

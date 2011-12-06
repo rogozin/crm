@@ -45,7 +45,7 @@
 <% @firms.each do |firm| %>
   <tr>
     <td><%= firm.id %></td>
-    <td><%= edit_firm_link(firm) %></td>
+    <td><%= edit_client_link(firm) %></td>
     <td><%= firm.short_name %></td>
     <td><%= firm.city %></td>
     <td><%= firm.phones.map(&:value).join(', ') %></td>
