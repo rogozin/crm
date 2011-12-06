@@ -46,6 +46,15 @@ end
       get :my_contacts, :next_date_from => "05.10.2011",  :next_date_to => "12.10.2011"
       assigns(:contacts).should eq([contact])
     end
+    
+    it 'Фильтр по менеджеру' do
+      contact = Factory(:contact, :next_date => Date.today, :created_by => 1, :client_id => 1)
+      contact2 = Factory(:contact, :next_date => Date.today, :created_by => 2, :client_id => 2)
+      contact3 = Factory(:contact, :next_date => Date.today, :created_by => 3, :client_id => 3)
+      get :my_contacts, :managers => [1,2]
+      assigns(:contacts).should eq([contact, contact2])
+      
+    end
 
 
   end

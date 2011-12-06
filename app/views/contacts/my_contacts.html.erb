@@ -4,11 +4,21 @@
 <%= form_tag my_contacts_path, :method => :get do %>
 <fieldset>
 <legend>Фильтр</legend>
+
 <%= label_tag :date_from, "Дата контакта с" %>: <%= text_field_tag :date_from, params[:date_from], :class => "datepicker" %>
 <%= label_tag :date_to, "по" %>: <%= text_field_tag :date_to, params[:date_to], :class => "datepicker" %>
-<%= label_tag :next_date_from, "Следующий контакт с" %>: <%= text_field_tag :next_date_from, params[:next_date_from], :class => "datepicker" %>
+<%= label_tag :next_date_from, "След. контакт с" %>: <%= text_field_tag :next_date_from, params[:next_date_from], :class => "datepicker" %>
 <%= label_tag :next_date_to, "по" %>: <%= text_field_tag :next_date_to, params[:next_date_to], :class => "datepicker" %>
-<%= submit_tag "Найти" , :name => nil%>
+<%= submit_tag "Найти" , :name => nil%> <br />
+<% if current_user.is_first_manager? -%>
+  <%= label_tag :managers, "Менеджер:" %> 
+  <% @managers.each do |owner| -%>
+   <%= check_box_tag "managers[]", owner.id, params[:managers].present? && params[:managers].include?(owner.id.to_s), :id => dom_id(owner) %>
+   <%= label_tag dom_id(owner), user_name(owner) %>
+  <% end -%>
+<% end -%>
+
+
 </fieldset>
 <% end -%>
 </div>

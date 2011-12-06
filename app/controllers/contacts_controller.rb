@@ -19,14 +19,16 @@ class ContactsController < ClientsController
   end
   
   def my_contacts
-    params[:date_from] ||= Date.today
-    params[:date_to] ||= Date.tomorrow
+    params[:next_date_from] ||= Date.today
+    params[:next_date_to] ||= Date.tomorrow
+    @managers = User.where(:id => Contact.select("distinct created_by").map(&:created_by))
     @contacts = Contact.scoped
     @contacts = @contacts.joins(", (select  client_id, max(id) id from contacts group by client_id order by client_id) cc").where("cc.id = contacts.id")
     @contacts = @contacts.where("`current_date` >= :date_from", {:date_from => params[:date_from].to_time(:local)}) if params[:date_from].present?
     @contacts = @contacts.where("`current_date` < :date_to", {:date_to => params[:date_to].to_time(:local)}) if params[:date_to].present?
     @contacts = @contacts.where("`next_date` >= :date_from", {:date_from => params[:next_date_from].to_time(:local)}) if params[:next_date_from].present?
     @contacts = @contacts.where("`next_date` < :date_to", {:date_to => params[:next_date_to].to_time(:local)}) if params[:next_date_to].present?    
+    @contacts = @contacts.where(:created_by => params[:managers]) if current_user.is_first_manager? && params[:managers].present?
     @contacts = @contacts.where(:created_by => current_user.id) unless current_user.is_first_manager?
     @contacts = @contacts.order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])    
   end
