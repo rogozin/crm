@@ -23,7 +23,7 @@ class UsersController < FirmsController
   def update
     @user = User.find(params[:id])    
     @user.errors[:firm_id] = "такого ID не существует" if params[:user][:firm_id] != @user.firm_id.to_s && !Client.exists?(params[:user][:firm_id])
-    if @user.errors.empty? && @user.update_attributes(params[:user])
+    if @user.errors.empty? && @user.update_attributes(params[:user], :as => :crm)
       redirect_to edit_user_path(@user), :notice => "Учетная запись пользователя изменена"
     else 
       @firm = @user.firm
