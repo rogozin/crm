@@ -8,7 +8,7 @@ class Client < ActiveRecord::Base
   has_many :users, :foreign_key => :firm_id
   has_many :client_owners, :dependent => :delete_all
   has_many :owners, :through => :client_owners, :source => :user
-  has_many :communications, :as => :ownerable
+  has_many :communications, :as => :ownerable, :dependent => :delete_all
   has_many :phones, :as => :ownerable, :class_name => "Communication", :conditions => {:type_id => 0}
   has_many :emails, :as => :ownerable, :class_name => "Communication", :conditions => {:type_id => 1}
   has_many :sites, :as => :ownerable, :class_name => "Communication", :conditions => {:type_id => 2}
