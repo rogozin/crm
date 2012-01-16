@@ -24,18 +24,18 @@ end
   
   
   describe 'GET my_contacts' do
-    it "мои контакты (вижу только последние контакты) на сегодня" do
-      contact = Factory(:contact, :client_id => @firm.id)
-      contact2 = Factory(:contact, :client_id => @firm.id)
+    it "мои контакты все на сегодня" do
+      contact = Factory(:contact, :current_date => Date.yesterday, :next_date => Time.now, :client_id => @firm.id)
+      contact2 = Factory(:contact, :current_date => Date.yesterday, :next_date => Time.now, :client_id => @firm.id)
       get :my_contacts
-      assigns(:contacts).should eq([contact2])
+      assigns(:contacts).should eq([contact, contact2])
     end
 
     it 'фильтр по дате контакта' do
       contact2 = Factory(:contact, :current_date => "01.10.2011", :client_id => 999)      
       contact = Factory(:contact, :current_date => "05.10.2011", :client_id => @firm.id)
       contact3 = Factory(:contact, :current_date => "12.10.2011", :client_id => 998)
-      get :my_contacts, :date_from => "05.10.2011", :date_to => "12.10.2011"
+      get :my_contacts, :date_from => "05.10.2011", :date_to => "12.10.2011", :next_date_from => "", :next_date_to => ""
       assigns(:contacts).should eq([contact])
     end
     
