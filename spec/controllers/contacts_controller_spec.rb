@@ -24,10 +24,18 @@ end
   
   
   describe 'GET my_contacts' do
-    it "мои контакты все на сегодня" do
+    it "мои контакты на сегодня - только послений контакт от клиента" do
       contact = Factory(:contact, :current_date => Date.yesterday, :next_date => Time.now, :client_id => @firm.id)
       contact2 = Factory(:contact, :current_date => Date.yesterday, :next_date => Time.now, :client_id => @firm.id)
       get :my_contacts
+      assigns(:contacts).should eq([contact2])
+    end
+
+
+    it "мои контакты, показать все" do
+      contact = Factory(:contact, :current_date => Date.yesterday, :next_date => Time.now, :client_id => @firm.id)
+      contact2 = Factory(:contact, :current_date => Date.yesterday, :next_date => Time.now, :client_id => @firm.id)
+      get :my_contacts, :show_all => "1"
       assigns(:contacts).should eq([contact, contact2])
     end
 
