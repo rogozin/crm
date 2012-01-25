@@ -4,7 +4,7 @@ class ClientsController < BaseController
   before_filter :select_form_data, :only => [:index, :new, :edit, :update, :create]
   before_filter :select_owners, :only => [:index]
   access_control do
-    allow "Администратор", "Главный менеджер"
+    allow "admin", "Главный менеджер"
     allow "Менеджер продаж", :except => [:destroy]
   end
   
@@ -75,8 +75,14 @@ class ClientsController < BaseController
     merge_attributes(params[:client][:phones_attributes])
     merge_attributes(params[:client][:emails_attributes])
     merge_attributes(params[:client][:sites_attributes])
+    new_service_ids = (params[:client].delete(:service_ids) || []).map(&:to_i) 
     respond_to do |format|            
       if @firm.valid? @firm.update_attributes(params[:client])
+        if @firm.firm
+          old_service_ids = @firm.firm.service_ids  || []
+          @firm.firm.firm_services.active.where(:service_id => (old_service_ids-new_service_ids)).each{|s| s.destroy}
+          @firm.firm.service_ids += new_service_ids-old_service_ids
+        end
         format.html { redirect_to edit_client_path(@firm), :notice =>  "#{ Client.model_name.human } успешно изменен."}
         format.json { head :ok }
       else
@@ -120,6 +126,7 @@ class ClientsController < BaseController
   def select_form_data
     @states= Client.states.to_a[0..3]
     @states.delete_at(0) if @firm && @firm.free?
+    @services = Service.order("name")    
   end
   
   def select_owners

@@ -29,7 +29,7 @@ gem 'composite_primary_keys', :git => "https://github.com/drnic/composite_primar
 gem 'therubyracer'
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.8'
   gem 'capybara'
   gem 'factory_girl'
   gem 'paperclip'

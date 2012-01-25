@@ -1,4 +1,9 @@
+#encoding:utf-8;
 class FirmsController < BaseController
+  access_control do
+    allow "admin", "Главный менеджер","Менеджер продаж"
+  end  
+  
   def index
     params[:page] ||=1
     params[:per_page] ||=30

@@ -74,6 +74,21 @@
 Связан с фирмой: <%= f.text_field :firm_id %> <%= link_to @firm.firm.name, firm_path(@firm.firm) if @firm.firm %>
 </p>
 <div class="spacer"></div>
+<div class="services">
+<% if @firm.firm -%>
+  
+<h3>Пакеты услуг:</h3>
+ <ul>
+        <% @services.each do |item| -%>
+          <li><%= check_box_tag "client[service_ids][]", item.id, @firm.service_ids.include?(item.id), :id => dom_id(item) %>
+            <%= label_tag dom_id(item), item.name %>
+          </li>    
+        <% end -%>
+        </ul>    
+<% end -%>
+</div>
+
+<div class="spacer"></div>
  <p class="label">Комментарий:</p>
     <div class="tinymce">
       <%= f.text_area :comment %>

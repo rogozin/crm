@@ -34,7 +34,7 @@ class UsersController < FirmsController
   private
   
   def load_roles
-    @roles = Role.where(:group => 2)
+    @roles = Role.where(:group => [2,5])
     @hidden_roles = Role.where "`group` <> 2"
   end
   

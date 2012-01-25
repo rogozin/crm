@@ -1,7 +1,7 @@
 #encoding: utf-8;
 class ContactTypesController < BaseController
   access_control do
-    allow "Администратор", "Главный менеджер"
+    allow "admin", "Главный менеджер"
   end
   # GET /contact_types
   # GET /contact_types.json

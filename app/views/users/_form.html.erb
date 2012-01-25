@@ -34,18 +34,21 @@
     <%= f.check_box :active %>
   </div>
   
-  <h3>Роли:</h3>
+  <div class="roles">
+  <h2>Доступ к ресурсам:</h2>
   <% @hidden_roles.each do |hidden_role| -%>
     <%= hidden_field_tag "user[role_object_ids][]", hidden_role.id if @user.role_object_ids.include?(hidden_role.id) %>
   <% end -%>
-  <% @roles.each do |role| -%>
-      
-  <div class ="field">
-    <%= label_tag dom_id(role), role.name %>
-    <%= check_box_tag "user[role_object_ids][]", role.id, @user.role_object_ids.include?(role.id), :id => dom_id(role) %>
-  </div>  
+  <% @roles.group_by(&:group).each do |gr,roles| -%>
+    <h3><%= Role.group_names[gr] %></h3>
+    <% roles.each do |role| -%>
+      <div class ="field">
+        <%= label_tag dom_id(role), role.description, :title => role.name %>
+        <%= check_box_tag "user[role_object_ids][]", role.id, @user.role_object_ids.include?(role.id), :id => dom_id(role) %>
+      </div>  
+    <% end -%>
   <% end -%>
-  
+  </div>  
   <div class="actions">
     <%= f.submit %>
   </div>

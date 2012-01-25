@@ -13,12 +13,14 @@ class Client < ActiveRecord::Base
   has_many :emails, :as => :ownerable, :class_name => "Communication", :conditions => {:type_id => 1}
   has_many :sites, :as => :ownerable, :class_name => "Communication", :conditions => {:type_id => 2}
   belongs_to :firm
+  has_many :services, :through => :firm
   validates :state_id, :presence => true
   scope :free, where(:state_id => [1,2,3])
   scope :my, lambda {|user_id| where("(state_id in (1,2,3)) or (state_id = 0 and exists (select null from client_owners co where co.client_id = clients.id and co.user_id  = #{user_id} and active = 1))")}
   after_save :reset_all
 
    accepts_nested_attributes_for :phones,  :allow_destroy => true
+   accepts_nested_attributes_for :services,  :allow_destroy => true
    accepts_nested_attributes_for :emails, :sites, :reject_if => proc {|attributes| attributes['value'].blank?}, :allow_destroy => true
 
   def active_owners

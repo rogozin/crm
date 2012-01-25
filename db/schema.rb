@@ -536,8 +536,4 @@ ActiveRecord::Schema.define(:version => 20111130090138) do
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
   add_index "users", ["username"], :name => "index_users_on_username"
 
-  create_table "xml_data", :force => true do |t|
-    t.string "original_name", :null => false
-  end
-
 end

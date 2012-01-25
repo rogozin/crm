@@ -173,6 +173,34 @@ describe ClientsController do
         assigns(:firm).active_owners.should be_empty 
       end
       
+      context "услуги" do
+        before(:each) do
+          @role = Factory(:r_search)
+          @service = Factory(:service, :roles => [@role])        
+          @firm  = Factory(:firm)          
+          @f_user = Factory(:user, :firm => @firm)
+          @client = Factory(:client, :state_id => 1, :firm => @firm)        
+        end
+      
+        it 'добавляю услугу' do
+          direct_login_as :first_manager
+          put :update, :id => @client.id, :client => {:service_ids=>[@service.id]}
+          assigns(:firm).services.should eq [@service]
+          @f_user.role_objects.should eq [@role]
+        end
+        
+        it 'удаляю услугу' do
+          direct_login_as :first_manager
+          @firm.services << @service
+          put :update, :id => @client.id, :client => {:service_ids=>[]}
+          assigns(:firm).services.should be_empty
+          assigns(:firm).firm.archived_services.should eq [@service]
+          @f_user.role_objects.should be_empty
+        end
+        
+      
+      end
+      
     end
 
     describe "with invalid params" do
