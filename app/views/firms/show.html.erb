@@ -60,6 +60,10 @@
     <td>Изменена</td>
     <td><%= l(@firm.updated_at, :format => :long) %></td>
   </tr>
+  <tr>
+    <td>Статистика</td>
+    <td><%= stats @firm %></td>
+  </tr>  
 </table>
 
 </div>

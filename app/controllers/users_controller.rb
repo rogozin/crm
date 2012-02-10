@@ -10,7 +10,9 @@ class UsersController < FirmsController
   end
   
   def stats
-    @users  = User.select("distinct users.*").joins(:role_objects).where("roles.group > 1").order("last_request_at desc, created_at desc").paginate(:page => params[:page], :per_page => params[:per_page])
+    params[:sort]||="last_request_at" 
+    params[:direction]||="desc"
+    @users  = User.select("distinct users.*").joins(:role_objects).where("roles.group > 1").order(order_string).paginate(:page => params[:page], :per_page => params[:per_page])
   end
   
   

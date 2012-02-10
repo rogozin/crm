@@ -1,22 +1,24 @@
 <table>
   <th></th>
-  <th>Логин</th>
+  <th><%= sort_column :username, "Логин" %></th>      
   <% unless @firm -%>    
-  <th>Фирма</th> 
+  <th><%= sort_column :firm_id, "Фирма" %></th>    
   <% end -%>
-  <th>ФИО</th>
-  <th>Создан</th>
-  <th>Кол-во входов</th>
-  <th>Пред IP</th>
-  <th>Пред. вход</th>
-  <th>Текущ. IP</th>
-  <th>Посл. активность</th>
+  <th><%= sort_column :fio, "ФИО" %></th>  
+  <th><%= sort_column :created_at, "Создан" %></th>  
+  <th><%= sort_column :login_count, "Кол-во входов" %></th>  
+  <th><%= sort_column :last_login_ip, "Пред IP" %></th>  
+  <th><%= sort_column :last_login_at, "Пред. вход" %></th>  
+  <th><%= sort_column :current_login_ip, "Текущ. IP" %></th>  
+  <th><%= sort_column :last_request_at, "Посл. активность" %></th>
   <% @users.each do |user| -%>
     <tr>
       <td><%= checked_box_image(user.active?) %></td>
       <td><%= edit_user_link user %></td>
       <% unless @firm -%>
-        <td class="no-wrap"><%= link_to user.firm.name, firm_path(user.firm) if user.firm %></td>        
+        <td class="no-wrap"><%= link_to user.firm.name, firm_path(user.firm) if user.firm %> <br />
+        <%= stats user.firm if user.firm %>
+        </td>        
       <% end -%>
       <td><%= user.fio %>
       <p class="smalltext"><%= user.appoint %></p>

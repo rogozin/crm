@@ -3,3 +3,19 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .table_data {padding-top:10px;}
+table.firm-stats {
+tr { 
+   td {
+     padding:2px;
+     line-height:12px;
+     border:0px;     
+     &.positive {
+      color:green;
+      &:before {content: "+";}
+      }
+   }
+ }
+tr:first-child td { border-bottom:1px solid #000;     }
+tr:last-child td { border-top:1px solid #000;text-align:right; }
+
+}

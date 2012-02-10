@@ -23,6 +23,9 @@ end
 
 gem 'gift-auth', :path => "../gift/auth"
 gem 'gift-core', :path => "../gift/core"
+gem 'gift-base', :path => "../gift/base"
+gem 'gift-lk', :path => "../gift/lk"
+
 
 gem 'jquery-rails'
 gem 'composite_primary_keys', :git => "https://github.com/drnic/composite_primary_keys.git"
