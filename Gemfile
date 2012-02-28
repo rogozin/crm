@@ -48,3 +48,6 @@ end
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+gem "twitter_bootstrap_form_for", :git =>  "git://github.com/rilya/twitter_bootstrap_form_for.git"
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+                              :git => 'git://github.com/anjlab/bootstrap-rails.git'
