@@ -1,7 +1,7 @@
 #encoding: utf-8;
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
-  before_filter :require_user
+  before_filter :authenticate_user!
   # GET <%= route_url %>
   # GET <%= route_url %>.json
   def index
