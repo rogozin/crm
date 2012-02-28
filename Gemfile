@@ -23,6 +23,9 @@ end
 
 gem 'gift-auth', :path => "../gift/auth"
 gem 'gift-core', :path => "../gift/core"
+gem 'gift-base', :path => "../gift/base"
+gem 'gift-lk', :path => "../gift/lk"
+
 
 gem 'jquery-rails'
 gem 'composite_primary_keys', :git => "https://github.com/drnic/composite_primary_keys.git"
@@ -45,3 +48,6 @@ end
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+gem "twitter_bootstrap_form_for", :git =>  "git://github.com/rilya/twitter_bootstrap_form_for.git"
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+                              :git => 'git://github.com/anjlab/bootstrap-rails.git'
