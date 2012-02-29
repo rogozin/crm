@@ -37,23 +37,23 @@
 </tr>
 <tr>
   <td>Предыдущий вход</td>
-  <td><%= l(@user.last_login_at,:format => :long) if @user.last_login_at %></td>
+  <td><%= l(@user.last_sign_in_at,:format => :long) if @user.last_sign_in_at %></td>
 </tr>
 <tr>
   <td>Предыдущий IP</td>
-  <td><%= @user.last_login_ip %></td>  
+  <td><%= @user.last_sign_in_ip %></td>  
 </tr>
 <tr>
   <td>Последний вход</td>
-  <td><%= l(@user.current_login_at,:format => :long)  if @user.current_login_at %></td>
+  <td><%= l(@user.current_sign_in_at,:format => :long)  if @user.current_sign_in_at %></td>
 </tr>
 <tr>
   <td>Последний IP</td>
-  <td><%= @user.current_login_ip %></td>  
+  <td><%= @user.current_sign_in_ip %></td>  
 </tr>
 <tr>
   <td>Всего входов</td>
-  <td><%= @user.login_count %></td>  
+  <td><%= @user.sign_in_count %></td>  
 </tr>
 <tr>
   <td>Последняя активность</td>

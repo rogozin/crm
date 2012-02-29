@@ -6,11 +6,11 @@
   <% end -%>
   <th><%= sort_column :fio, "ФИО" %></th>  
   <th><%= sort_column :created_at, "Создан" %></th>  
-  <th><%= sort_column :login_count, "Кол-во входов" %></th>  
-  <th><%= sort_column :last_login_ip, "Пред IP" %></th>  
-  <th><%= sort_column :last_login_at, "Пред. вход" %></th>  
-  <th><%= sort_column :current_login_ip, "Текущ. IP" %></th>  
-  <th><%= sort_column :last_request_at, "Посл. активность" %></th>
+  <th><%= sort_column :sign_in_count, "Кол-во входов" %></th>  
+  <th><%= sort_column :last_sign_in_ip, "Пред IP" %></th>  
+  <th><%= sort_column :last_sign_in_at, "Пред вход" %></th>  
+  <th><%= sort_column :current_sign_in_ip, "Текущ IP" %></th>  
+  <th><%= sort_column :current_sign_in_at, "Текущ вход" %></th>  
   <% @users.each do |user| -%>
     <tr>
       <td><%= checked_box_image(user.active?) %></td>
@@ -24,11 +24,11 @@
       <p class="smalltext"><%= user.appoint %></p>
       </td>
       <td class="no-wrap"><%= I18n.l(user.created_at, :format => :short) if user.created_at %></td>      
-      <td><%= user.login_count %></td>
-      <td><%= user.last_login_ip %></td>
-      <td class="no-wrap"><%= I18n.l(user.last_login_at, :format => :short) if user.last_login_at %></td>
-      <td><%= user.current_login_ip %></td>
-      <td class="no-wrap"><%= I18n.l(user.last_request_at, :format => :short) if user.last_request_at %></td>
+      <td><%= user.sign_in_count %></td>
+      <td><%= user.last_sign_in_ip %></td>
+      <td class="no-wrap"><%= I18n.l(user.last_sign_in_at, :format => :short) if user.last_sign_in_at %></td>
+      <td><%= user.current_sign_in_ip %></td>
+      <td class="no-wrap"><%= I18n.l(user.current_sign_in_at, :format => :short) if user.current_sign_in_at %></td>
     </tr>
   <% end -%>
 </table>
